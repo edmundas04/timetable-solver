@@ -6,9 +6,9 @@ namespace TimetableSolver.Models
 {
     public class Timetable
     {
-        public List<Teacher> Teachers { get; set; }
-        public List<Class> Classes { get; set; }
-        public List<TeachingGroup> TeachingGroups { get; set; }
+        internal List<Teacher> Teachers { get; set; }
+        internal List<Class> Classes { get; set; }
+        internal List<TeachingGroup> TeachingGroups { get; set; }
 
         public Timetable(List<Contracts.Class> classes, 
             List<Contracts.Teacher> teachers, 

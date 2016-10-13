@@ -41,6 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Contracts\Class.cs" />
+    <Compile Include="Models\Contracts\ClassAssignedTeachingGroup.cs" />
+    <Compile Include="Models\Contracts\Teacher.cs" />
+    <Compile Include="Models\Contracts\TeacherAssignedTeachingGroup.cs" />
+    <Compile Include="Models\Contracts\TeachingGroup.cs" />
+    <Compile Include="Models\Contracts\TimetableElement.cs" />
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeachingGroup.cs" />
     <Compile Include="Models\Timetable.cs" />

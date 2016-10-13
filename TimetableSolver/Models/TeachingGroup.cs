@@ -2,10 +2,10 @@
 
 namespace TimetableSolver.Models
 {
-    public class TeachingGroup
+    internal class TeachingGroup
     {
-        public int Id { get; set; }
-        public int LessonsPerWeek { get; set; }
-        public List<int> Timetable { get; set; }
+        internal int Id { get; set; }
+        internal int LessonsPerWeek { get; set; }
+        internal List<int> Timetable { get; set; }
     }
 }
