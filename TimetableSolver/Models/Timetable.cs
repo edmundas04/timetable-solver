@@ -6,19 +6,46 @@ namespace TimetableSolver.Models
 {
     public class Timetable
     {
-        internal List<Teacher> Teachers { get; set; }
-        internal List<Class> Classes { get; set; }
-        internal List<TeachingGroup> TeachingGroups { get; set; }
+
+        public List<Teacher> Teachers { get; set; }
+        public List<Class> Classes { get; set; }
+        public List<TeachingGroup> TeachingGroups { get; set; }
+        public Dictionary<short, short> AvailableWeekDays { get; set; }
 
         public Timetable(List<Contracts.Class> classes, 
             List<Contracts.Teacher> teachers, 
             List<Contracts.TeachingGroup> teachingGroups,
             List<Contracts.ClassAssignedTeachingGroup> classAssignedTeachingGroups, 
-            List<Contracts.TeacherAssignedTeachingGroup> teacherAssignedTeachingGroups)
+            List<Contracts.TeacherAssignedTeachingGroup> teacherAssignedTeachingGroups,
+            List<Contracts.AvailableWeekDay> availableWeekDays)
         {
             TeachingGroups = TransformTeachingGroups(teachingGroups);
             Teachers = TransformTeachers(teachers, teacherAssignedTeachingGroups);
             Classes = TransformClasses(classes, classAssignedTeachingGroups);
+            AvailableWeekDays = TransformAvailableWeekDays(availableWeekDays);
+        }
+
+        private Dictionary<short, short> TransformAvailableWeekDays(List<Contracts.AvailableWeekDay> availableWeekDays)
+        {
+            var dayOfWeekWeekNumberMap = new Dictionary<DayOfWeek, short>
+            {
+                { DayOfWeek.Monday, 1 },
+                { DayOfWeek.Tuesday, 2 },
+                { DayOfWeek.Wednesday, 3 },
+                { DayOfWeek.Thursday, 4 },
+                { DayOfWeek.Friday, 5 },
+                { DayOfWeek.Saturday, 6 },
+                { DayOfWeek.Sunday, 7 }
+            };
+
+            var result = new Dictionary<short, short>();
+
+            foreach (var availableWeekDay in availableWeekDays)
+            {
+                result.Add(dayOfWeekWeekNumberMap[availableWeekDay.DayOfWeek], availableWeekDay.NumberOfLessons);
+            }
+
+            return result;
         }
 
         private List<Class> TransformClasses(List<Contracts.Class> classes, List<Contracts.ClassAssignedTeachingGroup> classAssignedTeachingGroups)
@@ -61,7 +88,7 @@ namespace TimetableSolver.Models
 
         private int TransformTimetableElement(Contracts.TimetableElement timetableElement)
         {
-            var dayOfWeekWeekNumberMap = new Dictionary<DayOfWeek, int>
+            var dayOfWeekWeekNumberMap = new Dictionary<DayOfWeek, short>
             {
                 { DayOfWeek.Monday, 1 },
                 { DayOfWeek.Tuesday, 2 },

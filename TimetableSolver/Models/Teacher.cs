@@ -4,7 +4,18 @@ namespace TimetableSolver.Models
 {
     public class Teacher
     {
-        internal int Id { get; set; }
-        internal List<TeachingGroup> TeachingGroups { get; set; }
+        public int Id { get; set; }
+        public List<TeachingGroup> TeachingGroups { get; set; }
+        public List<int> GetTimetable()
+        {
+            var result = new List<int>();
+
+            foreach (var teachingGroup in TeachingGroups)
+            {
+                result.AddRange(teachingGroup.Timetable);
+            }
+
+            return result;
+        }
     }
 }
