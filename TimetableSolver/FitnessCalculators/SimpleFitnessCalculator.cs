@@ -29,7 +29,7 @@ namespace TimetableSolver.FitnessCalculators
             _classes = timetable.Classes;
         }
 
-        public int GetFitness(List<int> modifiedTeachingGroups)
+        public int GetFitness(List<int> modifiedTeachingGroups = null)
         {
             var result = 0;
 
@@ -55,7 +55,7 @@ namespace TimetableSolver.FitnessCalculators
 
             if(_classFrontWindowPenalty > 0)
             {
-                result += ClassFrontWindows() + _classFrontWindowPenalty;
+                result += ClassFrontWindows() * _classFrontWindowPenalty;
             }
 
             return result;
@@ -86,8 +86,8 @@ namespace TimetableSolver.FitnessCalculators
                 var groupedByDayOfWeek = teacher.GetTimetable().GroupBy(x => x / 100).ToList();
                 for (int j = 0; j < groupedByDayOfWeek.Count; j++)
                 {
-                    var dayOfWeekGroup = groupedByDayOfWeek[i].Distinct().ToList();
-                    if(dayOfWeekGroup.Count <= 1)
+                    var dayOfWeekGroup = groupedByDayOfWeek[j].Distinct().ToList();
+                    if (dayOfWeekGroup.Count <= 1)
                     {
                         continue;
                     }
