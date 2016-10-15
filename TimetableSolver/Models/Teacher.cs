@@ -6,6 +6,7 @@ namespace TimetableSolver.Models
     {
         public int Id { get; set; }
         public List<TeachingGroup> TeachingGroups { get; set; }
+
         public List<int> GetTimetable()
         {
             var result = new List<int>();
@@ -16,6 +17,15 @@ namespace TimetableSolver.Models
             }
 
             return result;
+        }
+
+        public Teacher Copy(List<TeachingGroup> teachingGroups)
+        {
+            return new Teacher
+            {
+                Id = Id,
+                TeachingGroups = teachingGroups
+            };
         }
     }
 }

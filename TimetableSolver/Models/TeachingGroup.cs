@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TimetableSolver.Models
 {
@@ -12,6 +13,16 @@ namespace TimetableSolver.Models
         {
             var elementIndex = Timetable.IndexOf(from);
             Timetable[elementIndex] = to;
+        }
+
+        public TeachingGroup Copy()
+        {
+            return new TeachingGroup
+            {
+                Id = Id,
+                LessonsPerWeek = LessonsPerWeek,
+                Timetable = Timetable.Select(s => s).ToList()
+            };
         }
     }
 }

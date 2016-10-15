@@ -137,6 +137,9 @@ namespace TimetableSolver.Tests
                 .AddTeacherAssignment(202, 305)
                 .AddTeacherAssignment(203, 309);
 
+            builder.AddAvailableWeekDay(DayOfWeek.Monday, 5)
+                .AddAvailableWeekDay(DayOfWeek.Tuesday, 5)
+                .AddAvailableWeekDay(DayOfWeek.Wednesday, 5);
 
             return builder.Build();
         }

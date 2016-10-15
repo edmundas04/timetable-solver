@@ -11,6 +11,8 @@ namespace TimetableSolver.Models
         public List<TeachingGroup> TeachingGroups { get; set; }
         public List<KeyValuePair<short, short>> AvailableWeekDays { get; set; }
 
+        public Timetable() { }
+
         public Timetable(List<Contracts.Class> classes, 
             List<Contracts.Teacher> teachers, 
             List<Contracts.TeachingGroup> teachingGroups,
@@ -99,6 +101,31 @@ namespace TimetableSolver.Models
             };
 
             return dayOfWeekWeekNumberMap[timetableElement.DayOfWeek] * 100 + timetableElement.LessonNumber;
+        }
+
+        public Timetable Copy()
+        {
+            var teachingGroups = TeachingGroups.Select(s => s.Copy()).ToList();
+
+            return new Timetable
+            {
+                AvailableWeekDays = AvailableWeekDays.Select(s => new KeyValuePair<short, short>(s.Key, s.Value)).ToList(),
+                TeachingGroups = teachingGroups,
+                Classes = Classes.Select(s => s.Copy(GetClassTeachingGroups(teachingGroups, s))).ToList(),
+                Teachers = Teachers.Select(s => s.Copy(GetTeacherTeachingGroups(teachingGroups, s))).ToList()
+            };
+        }
+
+        private List<TeachingGroup> GetClassTeachingGroups(List<TeachingGroup> teachingGroups, Class @class)
+        {
+            var teachingGroupIds = @class.TeachingGroups.Select(s => s.Id);
+            return teachingGroups.Where(x => teachingGroupIds.Contains(x.Id)).ToList();
+        }
+
+        private List<TeachingGroup> GetTeacherTeachingGroups(List<TeachingGroup> teachingGroups, Teacher teacher)
+        {
+            var teachingGroupIds = teacher.TeachingGroups.Select(s => s.Id);
+            return teachingGroups.Where(x => teachingGroupIds.Contains(x.Id)).ToList();
         }
     }
 }

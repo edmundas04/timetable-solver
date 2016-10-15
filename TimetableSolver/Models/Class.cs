@@ -17,5 +17,14 @@ namespace TimetableSolver.Models
 
             return result;
         }
+
+        public Class Copy(List<TeachingGroup> teachingGroups)
+        {
+            return new Class
+            {
+                Id = Id,
+                TeachingGroups = teachingGroups
+            };
+        }
     }
 }

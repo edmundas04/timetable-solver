@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Solvers\ISolver.cs" />
+    <Compile Include="Solvers\SimpleSolver.cs" />
     <Compile Include="FitnessCalculators\IFitnessCalculator.cs" />
     <Compile Include="FitnessCalculators\SimpleFitnessCalculator.cs" />
     <Compile Include="Models\Class.cs" />
@@ -60,9 +62,7 @@
     <Compile Include="Mutators\SimpleMutator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Algorithms\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
