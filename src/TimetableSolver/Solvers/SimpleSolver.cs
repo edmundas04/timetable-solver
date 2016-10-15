@@ -41,6 +41,7 @@ namespace TimetableSolver.Solvers
             {
                 if (_end)
                 {
+                    _end = false;
                     break;
                 }
 
