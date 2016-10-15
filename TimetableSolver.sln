@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{BC304A11-A484-4743-B26E-5A3AB53F66DD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{BC304A11-A484-4743-B26E-5A3AB53F66DD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9AA5EA2C-7CF7-4A65-878D-7A3FDDCD81A0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9AA5EA2C-7CF7-4A65-878D-7A3FDDCD81A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver", "TimetableSolver\TimetableSolver.csproj", "{716A4098-B7A9-4794-8D4B-48D169772825}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver", "src\TimetableSolver\TimetableSolver.csproj", "{716A4098-B7A9-4794-8D4B-48D169772825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver.Tests", "TimetableSolver.Tests\TimetableSolver.Tests.csproj", "{DF73CF06-96BD-4FC7-9EB1-ECF3F70C6B08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver.Tests", "src\TimetableSolver.Tests\TimetableSolver.Tests.csproj", "{DF73CF06-96BD-4FC7-9EB1-ECF3F70C6B08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
