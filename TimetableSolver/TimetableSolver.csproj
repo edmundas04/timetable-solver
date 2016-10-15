@@ -53,11 +53,15 @@
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeachingGroup.cs" />
     <Compile Include="Models\Timetable.cs" />
+    <Compile Include="Mutators\IMutator.cs" />
+    <Compile Include="Mutators\Mutations\ChangeHistoryElement.cs" />
+    <Compile Include="Mutators\Mutations\IMutation.cs" />
+    <Compile Include="Mutators\Mutations\SimpleMutation.cs" />
+    <Compile Include="Mutators\SimpleMutator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Algorithms\" />
-    <Folder Include="Mutators\Muatations\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

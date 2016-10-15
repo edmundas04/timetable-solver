@@ -6,11 +6,10 @@ namespace TimetableSolver.Models
 {
     public class Timetable
     {
-
         public List<Teacher> Teachers { get; set; }
         public List<Class> Classes { get; set; }
         public List<TeachingGroup> TeachingGroups { get; set; }
-        public Dictionary<short, short> AvailableWeekDays { get; set; }
+        public List<KeyValuePair<short, short>> AvailableWeekDays { get; set; }
 
         public Timetable(List<Contracts.Class> classes, 
             List<Contracts.Teacher> teachers, 
@@ -25,7 +24,7 @@ namespace TimetableSolver.Models
             AvailableWeekDays = TransformAvailableWeekDays(availableWeekDays);
         }
 
-        private Dictionary<short, short> TransformAvailableWeekDays(List<Contracts.AvailableWeekDay> availableWeekDays)
+        private List<KeyValuePair<short, short>> TransformAvailableWeekDays(List<Contracts.AvailableWeekDay> availableWeekDays)
         {
             var dayOfWeekWeekNumberMap = new Dictionary<DayOfWeek, short>
             {
@@ -38,11 +37,11 @@ namespace TimetableSolver.Models
                 { DayOfWeek.Sunday, 7 }
             };
 
-            var result = new Dictionary<short, short>();
+            var result = new List<KeyValuePair<short, short>>();
 
             foreach (var availableWeekDay in availableWeekDays)
             {
-                result.Add(dayOfWeekWeekNumberMap[availableWeekDay.DayOfWeek], availableWeekDay.NumberOfLessons);
+                result.Add(new KeyValuePair<short, short>(dayOfWeekWeekNumberMap[availableWeekDay.DayOfWeek], availableWeekDay.NumberOfLessons));
             }
 
             return result;
