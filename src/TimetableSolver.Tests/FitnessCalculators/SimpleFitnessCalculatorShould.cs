@@ -41,7 +41,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         public void CalculateClassWindows()
         {
             var fintnessCalcaulator = new SimpleFitnessCalculator(_timetable, 0, 0, 0, 1, 0);
-            fintnessCalcaulator.GetFitness().Should().Be(9);
+            fintnessCalcaulator.GetFitness().Should().Be(10);
         }
 
         [TestMethod]

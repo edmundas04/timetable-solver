@@ -50,7 +50,7 @@ namespace TimetableSolver.FitnessCalculators
 
             if(_classWindowPenalty > 0)
             {
-                result += ClassFrontWindows() * _classWindowPenalty;
+                result += ClassWindows() * _classWindowPenalty;
             }
 
             if(_classFrontWindowPenalty > 0)

@@ -8,18 +8,18 @@ namespace TimetableSolver.Samples
 {
     public class TimetableBuilder
     {
-        private List<Models.Contracts.Class> _classes;
-        private List<Models.Contracts.Teacher> _teachers;
-        private List<Models.Contracts.TeachingGroup> _teachingGroups;
+        private List<TimetableSolver.Models.Contracts.Class> _classes;
+        private List<TimetableSolver.Models.Contracts.Teacher> _teachers;
+        private List<TimetableSolver.Models.Contracts.TeachingGroup> _teachingGroups;
         private List<ClassAssignedTeachingGroup> _classAssignedTeachingGroups;
         private List<TeacherAssignedTeachingGroup> _teacherAssignedTeachingGroups;
         private List<AvailableWeekDay> _availableWeekDays;
 
         public TimetableBuilder()
         {
-            _classes = new List<Models.Contracts.Class>();
-            _teachers = new List<Models.Contracts.Teacher>();
-            _teachingGroups = new List<Models.Contracts.TeachingGroup>();
+            _classes = new List<TimetableSolver.Models.Contracts.Class>();
+            _teachers = new List<TimetableSolver.Models.Contracts.Teacher>();
+            _teachingGroups = new List<TimetableSolver.Models.Contracts.TeachingGroup>();
             _classAssignedTeachingGroups = new List<ClassAssignedTeachingGroup>();
             _teacherAssignedTeachingGroups = new List<TeacherAssignedTeachingGroup>();
             _availableWeekDays = new List<AvailableWeekDay>();
@@ -27,13 +27,13 @@ namespace TimetableSolver.Samples
 
         public TimetableBuilder AddClass(int idClass)
         {
-            _classes.Add(new Models.Contracts.Class { Id = idClass });
+            _classes.Add(new TimetableSolver.Models.Contracts.Class { Id = idClass });
             return this;
         }
 
         public TimetableBuilder AddTeacher(int idTeacher)
         {
-            _teachers.Add(new Models.Contracts.Teacher { Id = idTeacher });
+            _teachers.Add(new TimetableSolver.Models.Contracts.Teacher { Id = idTeacher });
             return this;
         }
 
@@ -51,7 +51,7 @@ namespace TimetableSolver.Samples
             };
 
             var timetableElements = timetable.Select(s => new TimetableElement { LessonNumber = s % 10, DayOfWeek = dayOfWeekWeekNumberMap[(short) (s / 100)] }).ToList();
-            _teachingGroups.Add(new Models.Contracts.TeachingGroup { Id = idTeachingGroup, LessonsPerWeek = lessonsPerWeek, Timetable = timetableElements });
+            _teachingGroups.Add(new TimetableSolver.Models.Contracts.TeachingGroup { Id = idTeachingGroup, LessonsPerWeek = lessonsPerWeek, Timetable = timetableElements });
             return this;
         }
 
