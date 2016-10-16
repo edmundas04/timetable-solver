@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver", "src\Time
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver.Tests", "src\TimetableSolver.Tests\TimetableSolver.Tests.csproj", "{DF73CF06-96BD-4FC7-9EB1-ECF3F70C6B08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver.Samples", "TimetableSolver.Samples\TimetableSolver.Samples.csproj", "{CB70F8B7-E99D-4FF8-9A96-1350C39D8080}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimetableSolver.Samples", "samples\TimetableSolver.Samples\TimetableSolver.Samples.csproj", "{CB70F8B7-E99D-4FF8-9A96-1350C39D8080}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

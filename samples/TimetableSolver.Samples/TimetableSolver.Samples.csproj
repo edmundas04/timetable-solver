@@ -63,7 +63,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\TimetableSolver\TimetableSolver.csproj">
+    <ProjectReference Include="..\..\src\TimetableSolver\TimetableSolver.csproj">
       <Project>{716a4098-b7a9-4794-8d4b-48d169772825}</Project>
       <Name>TimetableSolver</Name>
     </ProjectReference>
