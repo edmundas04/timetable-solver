@@ -61,6 +61,7 @@
     <Compile Include="Mutators\Mutations\SimpleMutation.cs" />
     <Compile Include="Mutators\SimpleMutator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimetableHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

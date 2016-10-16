@@ -38,18 +38,8 @@ namespace TimetableSolver.Samples
 
         public TimetableInfoBuilder AddTeachingGroup(int idTeachingGroup, int lessonsPerWeek, string name, string subject, List<int> timetable = null)
         {
-            var dayOfWeekWeekNumberMap = new Dictionary<short, DayOfWeek>
-            {
-                { 1, DayOfWeek.Monday },
-                { 2, DayOfWeek.Tuesday },
-                { 3, DayOfWeek.Wednesday },
-                { 4, DayOfWeek.Thursday },
-                { 5, DayOfWeek.Friday },
-                { 6, DayOfWeek.Saturday },
-                { 7, DayOfWeek.Sunday }
-            };
             timetable = timetable ?? new List<int>();
-            var timetableElements = timetable.Select(s => new TimetableElement { LessonNumber = s % 10, DayOfWeek = dayOfWeekWeekNumberMap[(short)(s / 100)] }).ToList();
+            var timetableElements = timetable.Select(s => new TimetableElement { LessonNumber = s % 10, DayOfWeek = TimetableHelper.GetDayOfWeek((short)(s / 100)) }).ToList();
             _teachingGroups.Add(new TeachingGroupInfo
             {
                 IdTeachingGroup = idTeachingGroup,

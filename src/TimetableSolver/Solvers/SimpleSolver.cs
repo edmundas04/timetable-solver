@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TimetableSolver.FitnessCalculators;
 using TimetableSolver.Models;
 using TimetableSolver.Mutators;
@@ -18,19 +20,39 @@ namespace TimetableSolver.Solvers
 
         public SimpleSolver(IMutator mutator, IFitnessCalculator fitnessCalculator, Timetable timetable)
         {
+
             _mutator = mutator;
             _fitnessCalculator = fitnessCalculator;
             _currentTimetable = timetable.Copy();
+            CheckTimetable(_currentTimetable);
+
             _end = false;
 
             _mutator.SetTimetable(_currentTimetable);
             _fitnessCalculator.SetTimetable(_currentTimetable);
 
-            BestTimetable = timetable.Copy();
+            BestTimetable = _currentTimetable.Copy();
             BestFitness = fitnessCalculator.GetFitness(null);
             Iterations = 0;
         }
 
+        private void CheckTimetable(Timetable timetable)
+        {
+            foreach (var teachingGroup in timetable.TeachingGroups)
+            {
+                if(teachingGroup.Timetable.Count != teachingGroup.LessonsPerWeek)
+                {
+                    throw new Exception("Teaching group timetable must have correct number of values");
+                }
+            }
+
+            var allTimetables = timetable.TeachingGroups.SelectMany(s => s.Timetable).Distinct();
+            var allowedValues = TimetableHelper.AvailableTimes(timetable.AvailableWeekDays);
+            if(!allTimetables.All(x => allowedValues.Contains(x)))
+            {
+                throw new Exception("Some timetable values are incorrect");
+            }
+        }
 
         public async Task<Timetable> Solve()
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace TimetableSolver.Models
@@ -28,22 +27,11 @@ namespace TimetableSolver.Models
 
         private List<KeyValuePair<short, short>> TransformAvailableWeekDays(List<Contracts.AvailableWeekDay> availableWeekDays)
         {
-            var dayOfWeekWeekNumberMap = new Dictionary<DayOfWeek, short>
-            {
-                { DayOfWeek.Monday, 1 },
-                { DayOfWeek.Tuesday, 2 },
-                { DayOfWeek.Wednesday, 3 },
-                { DayOfWeek.Thursday, 4 },
-                { DayOfWeek.Friday, 5 },
-                { DayOfWeek.Saturday, 6 },
-                { DayOfWeek.Sunday, 7 }
-            };
-
             var result = new List<KeyValuePair<short, short>>();
 
             foreach (var availableWeekDay in availableWeekDays)
             {
-                result.Add(new KeyValuePair<short, short>(dayOfWeekWeekNumberMap[availableWeekDay.DayOfWeek], availableWeekDay.NumberOfLessons));
+                result.Add(new KeyValuePair<short, short>(TimetableHelper.GetWeekNumber(availableWeekDay.DayOfWeek), availableWeekDay.NumberOfLessons));
             }
 
             return result;
@@ -89,18 +77,7 @@ namespace TimetableSolver.Models
 
         private int TransformTimetableElement(Contracts.TimetableElement timetableElement)
         {
-            var dayOfWeekWeekNumberMap = new Dictionary<DayOfWeek, short>
-            {
-                { DayOfWeek.Monday, 1 },
-                { DayOfWeek.Tuesday, 2 },
-                { DayOfWeek.Wednesday, 3 },
-                { DayOfWeek.Thursday, 4 },
-                { DayOfWeek.Friday, 5 },
-                { DayOfWeek.Saturday, 6 },
-                { DayOfWeek.Sunday, 7 }
-            };
-
-            return dayOfWeekWeekNumberMap[timetableElement.DayOfWeek] * 100 + timetableElement.LessonNumber;
+            return TimetableHelper.GetWeekNumber(timetableElement.DayOfWeek) * 100 + timetableElement.LessonNumber;
         }
 
         public Timetable Copy()
