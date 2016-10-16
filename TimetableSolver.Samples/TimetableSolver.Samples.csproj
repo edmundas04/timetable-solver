@@ -44,11 +44,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InfoPrinter.cs" />
+    <Compile Include="Models\AvailableWeekDay.cs" />
+    <Compile Include="Models\ClassAssignedTeachingGroup.cs" />
+    <Compile Include="Models\ClassInfo.cs" />
     <Compile Include="Models\Penalties.cs" />
+    <Compile Include="Models\TeacherAssignedTeachingGroup.cs" />
+    <Compile Include="Models\TeacherInfo.cs" />
+    <Compile Include="Models\TeachingGroupInfo.cs" />
+    <Compile Include="Models\TimetableElement.cs" />
+    <Compile Include="Models\TimetableInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleSolverExample.cs" />
     <Compile Include="TimetableBuilder.cs" />
+    <Compile Include="TimetableInfoBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
