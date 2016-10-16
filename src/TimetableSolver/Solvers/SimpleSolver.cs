@@ -20,15 +20,15 @@ namespace TimetableSolver.Solvers
         {
             _mutator = mutator;
             _fitnessCalculator = fitnessCalculator;
-            _currentTimetable = timetable;
+            _currentTimetable = timetable.Copy();
             _end = false;
+
+            _mutator.SetTimetable(_currentTimetable);
+            _fitnessCalculator.SetTimetable(_currentTimetable);
 
             BestTimetable = timetable.Copy();
             BestFitness = fitnessCalculator.GetFitness(null);
             Iterations = 0;
-
-            mutator.SetTimetable(_currentTimetable);
-            fitnessCalculator.SetTimetable(_currentTimetable);
         }
 
 

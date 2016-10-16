@@ -38,6 +38,8 @@ namespace TimetableSolver.FitnessCalculators
 
         public int GetFitness(List<int> modifiedTeachingGroups = null)
         {
+            CheckTimetableSet();
+
             var result = 0;
 
             if(_teacherCollisionPenalty > 0)
