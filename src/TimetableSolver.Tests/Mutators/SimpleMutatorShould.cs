@@ -25,7 +25,8 @@ namespace TimetableSolver.Tests.Mutators
             _mutation = Substitute.For<IMutation>();
             FillChangeHistoryElements();
             _mutation.Mutate(Arg.Any<Timetable>()).Returns(_changeHistoryElements);
-            _simpleMutator = new SimpleMutator(new List<IMutation> { _mutation }, _timetable);
+            _simpleMutator = new SimpleMutator(new List<IMutation> { _mutation });
+            _simpleMutator.SetTimetable(_timetable);
         }
 
         private void FillChangeHistoryElements()

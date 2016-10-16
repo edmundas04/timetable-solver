@@ -44,8 +44,8 @@ namespace TimetableSolver.Samples
             var penalties = Penalties.DefaultPenalties();
             var timetable = TimetableBuilder.GetTimetable();
 
-            var fitnessCalculator = new SimpleFitnessCalculator(timetable, penalties.TeacherCollisionPenalty, penalties.TeacherWindowPenalty, penalties.ClassCollisionPenalty, penalties.ClassWindowPenalty, penalties.ClassFrontWindowPenalty);
-            var mutator = new SimpleMutator(new List<IMutation> { new SimpleMutation() }, timetable);
+            var fitnessCalculator = new SimpleFitnessCalculator(penalties.TeacherCollisionPenalty, penalties.TeacherWindowPenalty, penalties.ClassCollisionPenalty, penalties.ClassWindowPenalty, penalties.ClassFrontWindowPenalty);
+            var mutator = new SimpleMutator(new List<IMutation> { new SimpleMutation() });
 
             var solver = new SimpleSolver(mutator, fitnessCalculator, timetable);
             InfoPrinter.PrintTimetableInfo(timetable, penalties);

@@ -26,6 +26,9 @@ namespace TimetableSolver.Solvers
             BestTimetable = timetable.Copy();
             BestFitness = fitnessCalculator.GetFitness(null);
             Iterations = 0;
+
+            mutator.SetTimetable(_currentTimetable);
+            fitnessCalculator.SetTimetable(_currentTimetable);
         }
 
 

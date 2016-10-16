@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TimetableSolver.Models;
 
@@ -12,10 +13,12 @@ namespace TimetableSolver.FitnessCalculators
         private int _classWindowPenalty;
         private int _classFrontWindowPenalty;
 
+        private Timetable _timetable;
+
         private List<Teacher> _teachers { get; set; }
         private List<Class> _classes { get; set; }
 
-        public SimpleFitnessCalculator(Timetable timetable, int teacherCollisionPenalty, 
+        public SimpleFitnessCalculator(int teacherCollisionPenalty, 
             int teacherWindowPenalty, int classCollisionPenalty, int classWindowPenalty, 
             int classFrontWindowPenalty)
         {
@@ -24,7 +27,11 @@ namespace TimetableSolver.FitnessCalculators
             _classCollisionPenalty = classCollisionPenalty;
             _classWindowPenalty = classWindowPenalty;
             _classFrontWindowPenalty = classFrontWindowPenalty;
+        }
 
+        public void SetTimetable(Timetable timetable)
+        {
+            _timetable = timetable;
             _teachers = timetable.Teachers;
             _classes = timetable.Classes;
         }
@@ -159,12 +166,20 @@ namespace TimetableSolver.FitnessCalculators
             return result;
         }
 
+        private void CheckTimetableSet()
+        {
+            if(_timetable == null)
+            {
+                throw new Exception("Timetable is not set");
+            }
+        }
+
         void IFitnessCalculator.Commit()
         {
         }
 
         void IFitnessCalculator.Rollback()
         {
-        }
+        }        
     }
 }

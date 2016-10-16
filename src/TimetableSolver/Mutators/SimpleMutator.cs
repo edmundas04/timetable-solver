@@ -14,19 +14,29 @@ namespace TimetableSolver.Mutators
         private List<ChangeHistoryElement> _pendingChanges;
         private Dictionary<int, TeachingGroup> _teachingGroups;
 
-        public SimpleMutator(List<IMutation> mutations, Timetable timetable) :this(mutations, timetable, new Random()) { }
+        public SimpleMutator(List<IMutation> mutations) :this(mutations, new Random()) { }
 
-        public SimpleMutator(List<IMutation> mutations, Timetable timetable, Random random)
+        public SimpleMutator(List<IMutation> mutations, Random random)
         {
             _mutations = mutations;
-            _timetable = timetable;
             _random = random;
             _pendingChanges = new List<ChangeHistoryElement>();
+            
+        }
+
+        public void SetTimetable(Timetable timetable)
+        {
+            _timetable = timetable;
             _teachingGroups = timetable.TeachingGroups.ToDictionary(x => x.Id);
         }
 
         public List<int> Mutate()
         {
+            if(_timetable == null)
+            {
+                throw new Exception("Timetable is not set");
+            }
+
             if(_pendingChanges.Count > 0)
             {
                 throw new Exception("Commit or rollback changes before mutation");
