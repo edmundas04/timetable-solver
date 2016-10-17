@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Randomizers\IRandomizer.cs" />
+    <Compile Include="Randomizers\Randomizer.cs" />
     <Compile Include="Solvers\ISolver.cs" />
-    <Compile Include="Solvers\SimpleSolver.cs" />
+    <Compile Include="Solvers\Solver.cs" />
     <Compile Include="FitnessCalculators\IFitnessCalculator.cs" />
-    <Compile Include="FitnessCalculators\SimpleFitnessCalculator.cs" />
+    <Compile Include="FitnessCalculators\FitnessCalculator.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Contracts\AvailableWeekDay.cs" />
     <Compile Include="Models\Contracts\Class.cs" />
@@ -58,8 +60,8 @@
     <Compile Include="Mutators\IMutator.cs" />
     <Compile Include="Mutators\Mutations\ChangeHistoryElement.cs" />
     <Compile Include="Mutators\Mutations\IMutation.cs" />
-    <Compile Include="Mutators\Mutations\SimpleMutation.cs" />
-    <Compile Include="Mutators\SimpleMutator.cs" />
+    <Compile Include="Mutators\Mutations\Mutation.cs" />
+    <Compile Include="Mutators\Mutator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimetableHelper.cs" />
   </ItemGroup>

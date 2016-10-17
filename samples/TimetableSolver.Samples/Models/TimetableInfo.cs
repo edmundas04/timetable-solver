@@ -30,5 +30,22 @@ namespace TimetableSolver.Samples.Models
             var result = new Timetable(classes, teachers, teachingGroups, classAssignedTeachingGroups, teacherAssignedTeachingGroups, availableWeekDays);
             return result;
         }
+
+        public void UpdateTimetable(Timetable timetable)
+        {
+            foreach (var teachingGroupInfo in TeachingGroups)
+            {
+                teachingGroupInfo.Timetable.Clear();
+                var teachingGroup = timetable.TeachingGroups.Single(s => s.Id == teachingGroupInfo.IdTeachingGroup);
+                foreach (var dayTime in teachingGroup.Timetable)
+                {
+                    teachingGroupInfo.Timetable.Add(new TimetableElement
+                    {
+                        DayOfWeek = TimetableHelper.GetDayOfWeek((short)(dayTime / 100)),
+                        LessonNumber = dayTime % 10
+                    });
+                }
+            }
+        }
     }
 }

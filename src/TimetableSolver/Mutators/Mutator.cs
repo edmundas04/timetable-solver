@@ -6,7 +6,7 @@ using TimetableSolver.Mutators.Mutations;
 
 namespace TimetableSolver.Mutators
 {
-    public class SimpleMutator : IMutator
+    public class Mutator : IMutator
     {
         private List<IMutation> _mutations;
         private Timetable _timetable;
@@ -14,9 +14,9 @@ namespace TimetableSolver.Mutators
         private List<ChangeHistoryElement> _pendingChanges;
         private Dictionary<int, TeachingGroup> _teachingGroups;
 
-        public SimpleMutator(List<IMutation> mutations) :this(mutations, new Random()) { }
+        public Mutator(List<IMutation> mutations) :this(mutations, new Random()) { }
 
-        public SimpleMutator(List<IMutation> mutations, Random random)
+        public Mutator(List<IMutation> mutations, Random random)
         {
             _mutations = mutations;
             _random = random;
@@ -60,7 +60,7 @@ namespace TimetableSolver.Mutators
             {
                 var changeHistoryElement = _pendingChanges[i];
                 var teachingGroup = _teachingGroups[changeHistoryElement.IdTeachingGroup];
-                teachingGroup.Change(changeHistoryElement.NewValue, changeHistoryElement.OldValue);
+                teachingGroup.ChangeDayTime(changeHistoryElement.NewValue, changeHistoryElement.OldValue);
             }
 
             _pendingChanges.Clear();

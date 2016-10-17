@@ -74,7 +74,7 @@ namespace TimetableSolver.Models
             }
 
             var allTimetables = teachingGroups.SelectMany(s => TransformTimetableElements(s.Timetable)).Distinct();
-            var allowedValues = TimetableHelper.AvailableTimes(TransformAvailableWeekDays(availableWeekDays));
+            var allowedValues = TimetableHelper.AvailableDayTimes(TransformAvailableWeekDays(availableWeekDays));
             if (!allTimetables.All(x => allowedValues.Contains(x)))
             {
                 throw new ArgumentException("Some timetable values are incorrect");

@@ -27,7 +27,7 @@ namespace TimetableSolver
             };
 
 
-        public static List<int> AvailableTimes(List<KeyValuePair<short, short>> availableWeekDays)
+        public static List<int> AvailableDayTimes(List<KeyValuePair<short, short>> availableWeekDays)
         {
             var result = new List<int>();
             foreach (var availableWeekDay in availableWeekDays)

@@ -4,13 +4,13 @@ using TimetableSolver.Models;
 
 namespace TimetableSolver.Mutators.Mutations
 {
-    public class SimpleMutation: IMutation
+    public class Mutation: IMutation
     {
         private Random _random;
 
-        public SimpleMutation(): this(new Random()) { }
+        public Mutation(): this(new Random()) { }
 
-        public SimpleMutation(Random random)
+        public Mutation(Random random)
         {
             _random = random;
         }
@@ -26,7 +26,7 @@ namespace TimetableSolver.Mutators.Mutations
             var weekDayIndex = _random.Next(0, timetable.AvailableWeekDays.Count);
             var weekDay = timetable.AvailableWeekDays[weekDayIndex].Key;
             var newTimetableElement = weekDay * 100 + _random.Next(1, timetable.AvailableWeekDays[weekDayIndex].Value + 1);
-            teachingGroup.Change(timetableElement, newTimetableElement);
+            teachingGroup.ChangeDayTime(timetableElement, newTimetableElement);
             changeHistoryElement.IdTeachingGroup = teachingGroup.Id;
             changeHistoryElement.OldValue = timetableElement;
             changeHistoryElement.NewValue = newTimetableElement;

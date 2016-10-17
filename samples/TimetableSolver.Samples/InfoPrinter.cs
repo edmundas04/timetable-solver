@@ -9,7 +9,7 @@ namespace TimetableSolver.Samples
     {
         public  static void PrintTimetableInfo(Timetable timetable, Penalties penalties)
         {
-            var fitnessCalculator = new SimpleFitnessCalculator(penalties.TeacherCollisionPenalty,
+            var fitnessCalculator = new FitnessCalculator(penalties.TeacherCollisionPenalty,
                 penalties.TeacherWindowPenalty, penalties.ClassCollisionPenalty, penalties.ClassWindowPenalty, penalties.ClassFrontWindowPenalty);
             fitnessCalculator.SetTimetable(timetable);
 

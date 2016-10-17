@@ -19,7 +19,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateTeacherCollisions()
         {
-            var fintnessCalcaulator = new SimpleFitnessCalculator(1, 0, 0, 0, 0);
+            var fintnessCalcaulator = new FitnessCalculator(1, 0, 0, 0, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness().Should().Be(11);
         }
@@ -27,7 +27,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateTeacherWindows()
         {
-            var fintnessCalcaulator = new SimpleFitnessCalculator(0, 1, 0, 0, 0);
+            var fintnessCalcaulator = new FitnessCalculator(0, 1, 0, 0, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness().Should().Be(8);
         }
@@ -35,7 +35,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassCollisions()
         {
-            var fintnessCalcaulator = new SimpleFitnessCalculator(0, 0, 1, 0, 0);
+            var fintnessCalcaulator = new FitnessCalculator(0, 0, 1, 0, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness().Should().Be(9);
         }
@@ -43,7 +43,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassWindows()
         {
-            var fintnessCalcaulator = new SimpleFitnessCalculator(0, 0, 0, 1, 0);
+            var fintnessCalcaulator = new FitnessCalculator(0, 0, 0, 1, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness().Should().Be(10);
         }
@@ -51,7 +51,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassFrontWindows()
         {
-            var fintnessCalcaulator = new SimpleFitnessCalculator(0, 0, 0, 0, 1);
+            var fintnessCalcaulator = new FitnessCalculator(0, 0, 0, 0, 1);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness().Should().Be(9);
         }

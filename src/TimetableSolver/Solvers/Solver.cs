@@ -7,7 +7,7 @@ using TimetableSolver.Mutators;
 
 namespace TimetableSolver.Solvers
 {
-    public class SimpleSolver : ISolver
+    public class Solver : ISolver
     {
         private IMutator _mutator;
         private IFitnessCalculator _fitnessCalculator;
@@ -18,7 +18,7 @@ namespace TimetableSolver.Solvers
         public int BestFitness { get; private set; }
         public int Iterations { get; private set; }
 
-        public SimpleSolver(IMutator mutator, IFitnessCalculator fitnessCalculator, Timetable timetable)
+        public Solver(IMutator mutator, IFitnessCalculator fitnessCalculator, Timetable timetable)
         {
 
             _mutator = mutator;
@@ -47,7 +47,7 @@ namespace TimetableSolver.Solvers
             }
 
             var allTimetables = timetable.TeachingGroups.SelectMany(s => s.Timetable).Distinct();
-            var allowedValues = TimetableHelper.AvailableTimes(timetable.AvailableWeekDays);
+            var allowedValues = TimetableHelper.AvailableDayTimes(timetable.AvailableWeekDays);
             if(!allTimetables.All(x => allowedValues.Contains(x)))
             {
                 throw new Exception("Some timetable values are incorrect");
