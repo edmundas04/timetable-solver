@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Timetable</title>
+	<link rel="stylesheet" href="styles.css">
+    <script>
+        var data = $jsonData;
+        /*var data = {
+            weekDays: [
+                {
+                    weekDayNumber: 1,
+                    name: 'Monday',
+                    lessonsPerDay: 5
+                },
+                {
+                    weekDayNumber: 2,
+                    name: 'Tuesday',
+                    lessonsPerDay: 6
+                },
+                {
+                    weekDayNumber: 3,
+                    name: 'Wednesday',
+                    lessonsPerDay: 5
+                },
+                {
+                    weekDayNumber: 4,
+                    name: 'Thursday',
+                    lessonsPerDay: 7
+                },
+                {
+                    weekDayNumber: 5,
+                    name: 'Friday',
+                    lessonsPerDay: 5
+                }
+            ],
+            timetableMembers: [
+                {
+                    id: 1,
+                    type: 'class',
+                    name: 'Class1',
+                    elements: [
+                        {
+                            idTeachingGroup: 1,
+                            shortName: 'B',
+                            teachingGroupName: 'BIO1',
+                            subjectName: 'Biology',
+                            dayOfWeek: 2,
+                            dayTime: 4
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    type: 'class',
+                    name: 'Class2',
+                    elements: []
+                },
+                {
+                    id: 3,
+                    type: 'class',
+                    name: 'Class2',
+                    elements: []
+                },
+                {
+                    id: 1,
+                    type: 'teacher',
+                    name: 'Teacher1',
+                    elements: []
+                },
+                {
+                    id: 2,
+                    type: 'teacher',
+                    name: 'Teacher2',
+                    elements: []
+                },
+                {
+                    id: 3,
+                    type: 'teacher',
+                    name: 'Teacher3',
+                    elements: []
+                }
+            ]
+
+        };*/
+    </script>
+    <script src="angular/angular.js"></script>
+    <script src="app/config.js"></script>
+    <script src="app/timetable.component.js"></script>
+    <script src="app/timetable-header/timetable-header.component.js"></script>
+    <script src="app/timetable-body/timetable-body.component.js"></script>
+    <script src="app/timetable-body/timetable-row/timetable-row.component.js"></script>
+</head>
+
+<body data-ng-app="timetable">
+    <timetable>Loading</timetable>
+</body>
+</html>

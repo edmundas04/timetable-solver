@@ -1,0 +1,26 @@
+body {
+    background-color: lightblue;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.element {
+    width: 30px;
+    height: 30px;
+    border: 1px solid lightgray;
+    float: left;
+    text-align: center;
+    font-size: 25px;
+    background-color: cornflowerblue;
+}
+.table-cell {
+    min-width: 32px;
+    min-height: 32px;
+}

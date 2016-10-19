@@ -24,11 +24,13 @@ namespace TimetableSolver.Samples
             var timetableInfo = TimetableInfoBuilder.GetTimetableInfo();
             var solver = BuildSimpleSolver(timetableInfo);
 
-            ExportHtml(timetableInfo, "before");
+            var environmentName = HtmlExportHelper.PrepareEnvironment();
+
+            HtmlExportHelper.ExportHtml(timetableInfo, environmentName, "before");
 
             Console.WriteLine("Optimization started");
 
-            Task<Timetable> optimization;
+            Task<Timetable> optimization = null;
             while (index != timeToExecute)
             {
                 optimization = solver.Solve();
@@ -38,9 +40,15 @@ namespace TimetableSolver.Samples
                 optimization.Wait();
                 Console.Write($"{index}. ");
                 InfoPrinter.PrintTimetableInfo(optimization.Result, Penalties.DefaultPenalties());
+                
             }
 
-            ExportHtml(timetableInfo, "after");
+            if(optimization != null)
+            {
+                timetableInfo.UpdateTimetable(optimization.Result);
+            }
+
+            HtmlExportHelper.ExportHtml(timetableInfo, environmentName, "after");
 
             Console.WriteLine("OptimizationEnded");
             Console.WriteLine($"Iterations: {solver.Iterations}");

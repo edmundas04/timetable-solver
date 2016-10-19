@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlExportHelper.cs" />
     <Compile Include="InfoPrinter.cs" />
     <Compile Include="Models\AvailableWeekDay.cs" />
     <Compile Include="Models\ClassAssignedTeachingGroup.cs" />
@@ -53,20 +58,35 @@
     <Compile Include="Models\TeachingGroupInfo.cs" />
     <Compile Include="Models\TimetableElement.cs" />
     <Compile Include="Models\TimetableInfo.cs" />
+    <Compile Include="Models\TimetableInfoViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleSolverExample.cs" />
-    <Compile Include="TimetableBuilder.cs" />
     <Compile Include="TimetableInfoBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\TimetableSolver\TimetableSolver.csproj">
       <Project>{716a4098-b7a9-4794-8d4b-48d169772825}</Project>
       <Name>TimetableSolver</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resources\angular\angular.js" />
+    <EmbeddedResource Include="resources\angular\angular.min.js" />
+    <EmbeddedResource Include="resources\app\config.js" />
+    <EmbeddedResource Include="resources\app\timetable-body\timetable-body.component.js" />
+    <EmbeddedResource Include="resources\app\timetable-body\timetable-row\timetable-row.component.js" />
+    <EmbeddedResource Include="resources\app\timetable-header\timetable-header.component.js" />
+    <EmbeddedResource Include="resources\app\timetable.component.js" />
+    <EmbeddedResource Include="resources\index.html" />
+    <EmbeddedResource Include="resources\styles.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resources\angular\angular.d.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
