@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TimetableSolver.Samples.Models;
+using TimetableSolver.Samples.TimetableInfoGenerators;
 
 namespace TimetableSolver.Samples
 {
@@ -152,6 +153,40 @@ namespace TimetableSolver.Samples
                 .AddAvailableWeekDay(DayOfWeek.Wednesday, 5);
 
             return builder.Build();
+        }
+
+        public static TimetableInfo GetRandomTimetableInfo(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher)
+        {
+            var availableWeekDays = new List<AvailableWeekDayInfo>
+            {
+                new AvailableWeekDayInfo
+                {
+                    DayOfWeek = DayOfWeek.Monday,
+                    NumberOfLessons = 6
+                },
+                new AvailableWeekDayInfo
+                {
+                    DayOfWeek = DayOfWeek.Tuesday,
+                    NumberOfLessons = 6
+                },
+                new AvailableWeekDayInfo
+                {
+                    DayOfWeek = DayOfWeek.Wednesday,
+                    NumberOfLessons = 6
+                },
+                new AvailableWeekDayInfo
+                {
+                    DayOfWeek = DayOfWeek.Thursday,
+                    NumberOfLessons = 6
+                },
+                new AvailableWeekDayInfo
+                {
+                    DayOfWeek = DayOfWeek.Friday,
+                    NumberOfLessons = 6
+                }
+            };
+            var timetableInfoGenrator = new TimetableInfoByClassGenerator(classCount, lessonsPerWeekForClass, lessonsPerWeekForTeacher, availableWeekDays);
+            return timetableInfoGenrator.Generate();
         }
     }
 }

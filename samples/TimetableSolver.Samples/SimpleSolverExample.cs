@@ -22,6 +22,7 @@ namespace TimetableSolver.Samples
 
             //The information for timetable is retrieved. It could be database or some other source
             var timetableInfo = TimetableInfoBuilder.GetTimetableInfo();
+            //var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(50, 24, 20);
             var solver = BuildSimpleSolver(timetableInfo);
 
             var environmentName = HtmlExportHelper.PrepareEnvironment();
