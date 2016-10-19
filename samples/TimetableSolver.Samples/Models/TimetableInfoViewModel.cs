@@ -30,7 +30,7 @@ namespace TimetableSolver.Samples.Models
                     elements.AddRange(teachingGroup.Timetable.Select(s =>
                     new ElementViewModel
                     {
-                        IdTeacingGroup = teachingGroup.IdTeachingGroup,
+                        IdTeachingGroup = teachingGroup.IdTeachingGroup,
                         DayTime = s.LessonNumber,
                         DayOfWeek = TimetableHelper.GetWeekNumber(s.DayOfWeek),
                         ShortName = teachingGroup.Subject[0].ToString().ToUpper(),
@@ -58,7 +58,7 @@ namespace TimetableSolver.Samples.Models
                     elements.AddRange(teachingGroup.Timetable.Select(s =>
                     new ElementViewModel
                     {
-                        IdTeacingGroup = teachingGroup.IdTeachingGroup,
+                        IdTeachingGroup = teachingGroup.IdTeachingGroup,
                         DayTime = s.LessonNumber,
                         DayOfWeek = TimetableHelper.GetWeekNumber(s.DayOfWeek),
                         ShortName = teachingGroup.Subject[0].ToString().ToUpper(),
@@ -118,7 +118,7 @@ namespace TimetableSolver.Samples.Models
 
     public class ElementViewModel
     {
-        public int IdTeacingGroup { get; set; }
+        public int IdTeachingGroup { get; set; }
         public string TeachingGroupName { get; set; }
         public string ShortName { get; set; }
         public string SubjectName { get; set; }

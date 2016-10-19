@@ -74,7 +74,7 @@ namespace TimetableSolver.Solvers
 
                 newFitness = _fitnessCalculator.GetFitness(_mutator.Mutate());
 
-                if(newFitness < BestFitness)
+                if(newFitness <= BestFitness)
                 {
                     _mutator.Commit();
                     _fitnessCalculator.Commit();

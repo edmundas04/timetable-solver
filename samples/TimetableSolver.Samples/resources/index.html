@@ -4,7 +4,7 @@
 <head>
 	<title>Timetable</title>
 	<link rel="stylesheet" href="styles.css">
-    <script>
+	<script>
         var data = $jsonData;
         /*var data = {
             weekDays: [
@@ -40,6 +40,14 @@
                     type: 'class',
                     name: 'Class1',
                     elements: [
+                        {
+                            idTeachingGroup: 1,
+                            shortName: 'B',
+                            teachingGroupName: 'BIO1',
+                            subjectName: 'Biology',
+                            dayOfWeek: 2,
+                            dayTime: 4
+                        },
                         {
                             idTeachingGroup: 1,
                             shortName: 'B',
@@ -84,15 +92,41 @@
 
         };*/
     </script>
-    <script src="angular/angular.js"></script>
-    <script src="app/config.js"></script>
-    <script src="app/timetable.component.js"></script>
-    <script src="app/timetable-header/timetable-header.component.js"></script>
-    <script src="app/timetable-body/timetable-body.component.js"></script>
-    <script src="app/timetable-body/timetable-row/timetable-row.component.js"></script>
+	<script src="angular/angular.js"></script>
+	<script src="app/config.js"></script>
+	<script src="app/timetable.component.js"></script>
+	<script src="app/timetable-header/timetable-header.component.js"></script>
+	<script src="app/timetable-body/timetable-body.component.js"></script>
+	<script src="app/timetable-body/timetable-row/timetable-row.component.js"></script>
 </head>
 
 <body data-ng-app="timetable">
-    <timetable>Loading</timetable>
+	<div class="legend">
+		<div class="legend-element">
+			<div class="element">
+				E
+			</div>
+			<div class="legend-text">
+				Ordinary element
+			</div>
+		</div>
+        <div class="legend-element">
+			<div class="element conflict">
+				E
+			</div>
+			<div class="legend-text">
+				Element in conflict
+			</div>
+		</div>
+	</div>
+    <br class="clear"/>
+    <div class="legend">
+        <div class="legend-text">
+            Double click on element will filter all timetable members by teaching group
+        </div>
+    </div>
+	<br class="clear" />
+	<timetable>Loading</timetable>
 </body>
+
 </html>

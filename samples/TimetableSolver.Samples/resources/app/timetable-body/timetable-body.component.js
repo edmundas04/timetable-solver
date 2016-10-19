@@ -16,6 +16,7 @@ TimetableBodyComponent.$inject = ['$scope'];
 function TimetableBodyComponent($scope){
     var ctrl = this;
     ctrl.init = init;
+    ctrl.elementDbclick = elementDbclick;
 
     function init(timetableMembers, weekDays) {
         ctrl.weekDays = $scope.$eval(weekDays);
@@ -30,6 +31,20 @@ function TimetableBodyComponent($scope){
 
         ctrl.timetableMembers = $scope.$eval(timetableMembers);
     }
+
+    function elementDbclick(idTeachingGroup) {
+        for(var i = 0; i < ctrl.timetableMembers.length; i++){
+            var timetableMember = ctrl.timetableMembers[i];
+            timetableMember.isVisible = false;
+            for(var j = 0; j < timetableMember.elements.length; j++){
+                var element = timetableMember.elements[j];
+                if(element.idTeachingGroup === idTeachingGroup){
+                    timetableMember.isVisible = true;
+                    break;
+                }
+			}
+        }
+    }
 }
 
 function TimetableBodyLink(scope, element, attrs){
@@ -37,7 +52,12 @@ function TimetableBodyLink(scope, element, attrs){
 }
 
 function Template(){
-    return `<tr data-ng-repeat="timetableMember in ::timetableBodyCtrl.timetableMembers" timetable-row="timetableMember" week-days="timetableBodyCtrl.weekDays"></tr>`;
+    return `<tr 
+                data-ng-repeat="timetableMember in ::timetableBodyCtrl.timetableMembers" 
+                timetable-row="timetableMember" 
+                week-days="timetableBodyCtrl.weekDays"
+                data-ng-show="timetableMember.isVisible">
+            </tr>`;
 }
 
 })(angular)

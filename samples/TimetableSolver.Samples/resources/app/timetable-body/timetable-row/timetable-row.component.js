@@ -21,6 +21,7 @@ function TimetableRowComponent($scope, $element, $timeout, $compile) {
 
     function init(timetableMemberAttr, weekDaysAttr) {
         ctrl.timetableMember = $scope.$eval(timetableMemberAttr);
+        ctrl.timetableMember.isVisible = true;
         weekDays = $scope.$eval(weekDaysAttr);
         mapWeekDays(weekDays);
         ctrl.weekDayTimes = Object.keys(weekDaysMap);
@@ -30,20 +31,24 @@ function TimetableRowComponent($scope, $element, $timeout, $compile) {
 
     function afterRender(){
         var html = `
-        <div class="element" title="$subjectName $teachingGroupName">
+        <div data-ng-dblclick=timetableBodyCtrl.elementDbclick($idTeachingGroup) class="element" title="$subjectName $teachingGroupName" draggable= "true">
         $shortName
         </div>`;
 
         for(var i = 0; i < ctrl.timetableMember.elements.length; i++){
             var timetableElement = ctrl.timetableMember.elements[i];
             var weekDayTimeIndex = weekDaysMap[timetableElement.dayOfWeek * 100 + timetableElement.dayTime];
-            var td = $element.find('td').eq(weekDayTimeIndex + 1).find('div').eq(0);
+            var div = $element.find('td').eq(weekDayTimeIndex + 1).find('div').eq(0);
 
-            var elementHtml = html.replace('$subjectName', timetableElement.subjectName)
+            var elementHtml = html.replace('$idTeachingGroup', timetableElement.idTeachingGroup)
+            .replace('$subjectName', timetableElement.subjectName)
             .replace('$teachingGroupName', timetableElement.teachingGroupName)
             .replace('$shortName', timetableElement.shortName);
-
-            td.append($compile(elementHtml)($scope));
+            div.append($compile(elementHtml)($scope));
+            var innerDivs = div.find('div');
+            if(innerDivs.length > 1){
+                innerDivs.addClass('conflict');
+            }
         }
     }
 
@@ -60,7 +65,7 @@ function TimetableRowComponent($scope, $element, $timeout, $compile) {
     }
 }
 
-function TimetableRowLink(scope, element, attrs) {
+function TimetableRowLink(scope, element, attrs, ctrl) {
     scope.timetableRowCtrl.init(attrs.timetableRow, attrs.weekDays);
 }
 

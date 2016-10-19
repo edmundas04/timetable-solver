@@ -20,7 +20,32 @@ table, th, td {
     font-size: 25px;
     background-color: cornflowerblue;
 }
+
+.conflict {
+    background-color: mediumvioletred;
+}
+
+.legend {
+    display: block;
+}
+
+.legend-element {
+    float: left;
+    margin-left: 5px; 
+}
+
+.legend-text{
+    height: 30px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.clear{
+    clear:both
+}
+
 .table-cell {
     min-width: 32px;
     min-height: 32px;
+    width: max-content;
 }
