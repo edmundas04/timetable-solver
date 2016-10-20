@@ -64,6 +64,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FitnessCalculators\CachedFitenessCalculatorShould.cs" />
     <Compile Include="FitnessCalculators\FitnessCalculatorShould.cs" />
     <Compile Include="Mutators\MutatorShould.cs" />
     <Compile Include="Performance.cs" />

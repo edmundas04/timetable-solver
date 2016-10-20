@@ -11,7 +11,7 @@ namespace TimetableSolver.Mutators
         private List<IMutation> _mutations;
         private Timetable _timetable;
         private Random _random;
-        private List<ChangeHistoryElement> _pendingChanges;
+        private List<MutationHistory> _pendingChanges;
         private Dictionary<int, TeachingGroup> _teachingGroups;
 
         public Mutator(List<IMutation> mutations) :this(mutations, new Random()) { }
@@ -20,7 +20,7 @@ namespace TimetableSolver.Mutators
         {
             _mutations = mutations;
             _random = random;
-            _pendingChanges = new List<ChangeHistoryElement>();
+            _pendingChanges = new List<MutationHistory>();
             
         }
 

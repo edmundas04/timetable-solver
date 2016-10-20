@@ -15,7 +15,7 @@ namespace TimetableSolver.Tests.Mutators
         private Timetable _timetable;
         private IMutation _mutation;
         private Mutator _simpleMutator;
-        private List<ChangeHistoryElement> _changeHistoryElements;
+        private List<MutationHistory> _changeHistoryElements;
 
 
         [TestInitialize]
@@ -31,27 +31,27 @@ namespace TimetableSolver.Tests.Mutators
 
         private void FillChangeHistoryElements()
         {
-            _changeHistoryElements = new List<ChangeHistoryElement>
+            _changeHistoryElements = new List<MutationHistory>
             {
-                new ChangeHistoryElement
+                new MutationHistory
                 {
                     IdTeachingGroup = 302,
                     NewValue = 101,
                     OldValue = 205
                 },
-                new ChangeHistoryElement
+                new MutationHistory
                 {
                     IdTeachingGroup = 304,
                     NewValue = 204,
                     OldValue = 302
                 },
-                new ChangeHistoryElement
+                new MutationHistory
                 {
                     IdTeachingGroup = 307,
                     NewValue = 301,
                     OldValue = 203
                 },
-                new ChangeHistoryElement
+                new MutationHistory
                 {
                     IdTeachingGroup = 310,
                     NewValue = 102,

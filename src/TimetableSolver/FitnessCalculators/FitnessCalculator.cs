@@ -63,7 +63,7 @@ namespace TimetableSolver.FitnessCalculators
 
             if (_classWindowPenalty > 0 && _classFrontWindowPenalty > 0)
             {
-                result += ClassWindowsAndFrontWindowsPenalty();
+                result += ClassWindowsAndFrontWindowsFitness();
             }
             else
             {
@@ -191,8 +191,7 @@ namespace TimetableSolver.FitnessCalculators
 
             return result;
         }
-
-        //Must be optimized in the future
+        
         public int ClassFrontWindows()
         {
             int result = 0;
@@ -228,7 +227,7 @@ namespace TimetableSolver.FitnessCalculators
             return result;
         }
 
-        public int ClassWindowsAndFrontWindowsPenalty()
+        public int ClassWindowsAndFrontWindowsFitness()
         {
             int classWindwos = 0;
             int classFrontWindows = 0;

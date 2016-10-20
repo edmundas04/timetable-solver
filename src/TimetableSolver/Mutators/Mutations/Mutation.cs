@@ -15,10 +15,10 @@ namespace TimetableSolver.Mutators.Mutations
             _random = random;
         }
 
-        public List<ChangeHistoryElement> Mutate(Timetable timetable)
+        public List<MutationHistory> Mutate(Timetable timetable)
         {
-            var result = new List<ChangeHistoryElement>();
-            var changeHistoryElement = new ChangeHistoryElement();
+            var result = new List<MutationHistory>();
+            var changeHistoryElement = new MutationHistory();
             var teachingGroupIndex = _random.Next(0, timetable.TeachingGroups.Count);
             var teachingGroup = timetable.TeachingGroups[teachingGroupIndex];
             var timetableElementIndex = _random.Next(0, teachingGroup.Timetable.Count);

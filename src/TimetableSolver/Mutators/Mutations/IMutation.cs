@@ -5,6 +5,6 @@ namespace TimetableSolver.Mutators.Mutations
 {
     public interface IMutation
     {
-        List<ChangeHistoryElement> Mutate(Timetable timetable);
+        List<MutationHistory> Mutate(Timetable timetable);
     }
 }
