@@ -79,13 +79,13 @@ namespace TimetableSolver.Samples.Models
 
         private List<TeachingGroupInfo> GetTeachingGroupsByTeacher(int idTeacher, List<TeachingGroupInfo> teachingGroups, List<TeacherAssignedTeachingGroup> teacherAssignedTeachingGroup)
         {
-            var teachingGroupIds = teacherAssignedTeachingGroup.Where(x => x.IdTeacher == idTeacher).Select(s => s.IdTeachingGroup);
+            var teachingGroupIds = teacherAssignedTeachingGroup.Where(x => x.IdTeacher == idTeacher).Select(s => s.IdTeachingGroup).ToList();
             return teachingGroups.Where(x => teachingGroupIds.Contains(x.IdTeachingGroup)).ToList();
         }
 
         private List<TeachingGroupInfo> GetTeachingGroupsByClass(int inClass, List<TeachingGroupInfo> teachingGroups, List<ClassAssignedTeachingGroup> classAssignedTeachingGroup)
         {
-            var teachingGroupIds = classAssignedTeachingGroup.Where(x => x.IdClass == inClass).Select(s => s.IdTeachingGroup);
+            var teachingGroupIds = classAssignedTeachingGroup.Where(x => x.IdClass == inClass).Select(s => s.IdTeachingGroup).ToList();
             return teachingGroups.Where(x => teachingGroupIds.Contains(x.IdTeachingGroup)).ToList();
         }
 

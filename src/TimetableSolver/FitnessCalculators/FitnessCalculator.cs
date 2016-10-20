@@ -17,6 +17,8 @@ namespace TimetableSolver.FitnessCalculators
 
         private List<Teacher> _teachers { get; set; }
         private List<Class> _classes { get; set; }
+        private List<int> _weekDayTimes;
+        private List<int> _weekDayNumbers;
 
         public FitnessCalculator(int teacherCollisionPenalty, 
             int teacherWindowPenalty, int classCollisionPenalty, int classWindowPenalty, 
@@ -34,6 +36,8 @@ namespace TimetableSolver.FitnessCalculators
             _timetable = timetable;
             _teachers = timetable.Teachers;
             _classes = timetable.Classes;
+            _weekDayTimes = TimetableHelper.AvailableDayTimes(timetable.AvailableWeekDays).OrderBy(x => x).ToList();
+            _weekDayNumbers = _weekDayTimes.Select(s => (s / 100) * 100).Distinct().OrderBy(x => x).ToList();
         }
 
         public int GetFitness(List<int> modifiedTeachingGroups = null)
@@ -57,14 +61,21 @@ namespace TimetableSolver.FitnessCalculators
                 result += ClassCollisions() * _classCollisionPenalty;
             }
 
-            if(_classWindowPenalty > 0)
+            if (_classWindowPenalty > 0 && _classFrontWindowPenalty > 0)
             {
-                result += ClassWindows() * _classWindowPenalty;
+                result += ClassWindowsAndFrontWindowsPenalty();
             }
-
-            if(_classFrontWindowPenalty > 0)
+            else
             {
-                result += ClassFrontWindows() * _classFrontWindowPenalty;
+                if (_classWindowPenalty > 0)
+                {
+                    result += ClassWindows() * _classWindowPenalty;
+                }
+
+                if (_classFrontWindowPenalty > 0)
+                {
+                    result += ClassFrontWindows() * _classFrontWindowPenalty;
+                }
             }
 
             return result;
@@ -83,28 +94,44 @@ namespace TimetableSolver.FitnessCalculators
 
             return result;
         }
-
-        //Must be optimized in the future
+        
         public int TeacherWindows()
         {
             int result = 0;
 
-            for (int i = 0; i < _teachers.Count; i++)
+            foreach (var teacher in _teachers)
             {
-                var teacher = _teachers[i];
-                var groupedByDayOfWeek = teacher.GetTimetable().GroupBy(x => x / 100).ToList();
-                for (int j = 0; j < groupedByDayOfWeek.Count; j++)
+                var timetableHashSet = teacher.GetTimetableHashSet();
+                var weekDayNumberIndex = 0;
+                var weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                var foundCount = 0;
+                var windowsCount = 0;
+                var windowsSinceLast = 0;
+
+                foreach (var weekDayTime in _weekDayTimes)
                 {
-                    var dayOfWeekGroup = groupedByDayOfWeek[j].Distinct().ToList();
-                    if (dayOfWeekGroup.Count <= 1)
+                    if ((weekDayTime - weekDayNumber) > 100)
                     {
-                        continue;
+                        weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                        result += windowsCount - windowsSinceLast;
+                        foundCount = 0;
+                        windowsCount = 0;
+                        windowsSinceLast = 0;
                     }
 
-                    var min = dayOfWeekGroup.Min();
-                    var max = dayOfWeekGroup.Max();
-                    result += max - min + 1 - dayOfWeekGroup.Count;
+                    if (timetableHashSet.Contains(weekDayTime))
+                    {
+                        foundCount++;
+                        windowsSinceLast = 0;
+                    }
+
+                    if (foundCount > 0 && !timetableHashSet.Contains(weekDayTime))
+                    {
+                        windowsCount++;
+                        windowsSinceLast++;
+                    }
                 }
+                result += windowsCount - windowsSinceLast;
             }
 
             return result;
@@ -122,28 +149,44 @@ namespace TimetableSolver.FitnessCalculators
 
             return result;
         }
-
-        //Must be optimized in the future
+        
         public int ClassWindows()
         {
             int result = 0;
 
-            for (int i = 0; i < _classes.Count; i++)
+            foreach (var @class in _classes)
             {
-                var @class = _classes[i];
-                var groupedByDayOfWeek = @class.GetTimetable().GroupBy(x => x / 100).ToList();
-                for (int j = 0; j < groupedByDayOfWeek.Count; j++)
+                var timetableHashSet = @class.GetTimetableHashSet();
+                var weekDayNumberIndex = 0;
+                var weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                var foundCount = 0;
+                var windowsCount = 0;
+                var windowsSinceLast = 0;
+
+                foreach (var weekDayTime in _weekDayTimes)
                 {
-                    var dayOfWeekGroup = groupedByDayOfWeek[j].Distinct().ToList();
-                    if (dayOfWeekGroup.Count <= 1)
+                    if ((weekDayTime - weekDayNumber) > 100)
                     {
-                        continue;
+                        weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                        result += windowsCount - windowsSinceLast;
+                        foundCount = 0;
+                        windowsCount = 0;
+                        windowsSinceLast = 0;
                     }
 
-                    var min = dayOfWeekGroup.Min();
-                    var max = dayOfWeekGroup.Max();
-                    result += max - min + 1 - dayOfWeekGroup.Count;
+                    if (timetableHashSet.Contains(weekDayTime))
+                    {
+                        foundCount++;
+                        windowsSinceLast = 0;
+                    }
+
+                    if (foundCount > 0 && !timetableHashSet.Contains(weekDayTime))
+                    {
+                        windowsCount++;
+                        windowsSinceLast++;
+                    }
                 }
+                result += windowsCount - windowsSinceLast;
             }
 
             return result;
@@ -154,18 +197,83 @@ namespace TimetableSolver.FitnessCalculators
         {
             int result = 0;
 
-            for (int i = 0; i < _classes.Count; i++)
+            foreach (var @class in _classes)
             {
-                var @class = _classes[i];
-                var groupedByDayOfWeek = @class.GetTimetable().GroupBy(x => x / 100).ToList();
-                for (int j = 0; j < groupedByDayOfWeek.Count; j++)
+                var timetableHashSet = @class.GetTimetableHashSet();
+                var weekDayNumberIndex = 0;
+                var weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                var firstFound = false;
+
+                foreach (var weekDayTime in _weekDayTimes)
                 {
-                    var min = groupedByDayOfWeek[j].Min();
-                    result += min % 10 - 1;
+                    if ((weekDayTime - weekDayNumber) > 100)
+                    {
+                        weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                        firstFound = false;
+                    }
+
+                    if (firstFound)
+                    {
+                        continue;
+                    }
+
+                    if (timetableHashSet.Contains(weekDayTime))
+                    {
+                        firstFound = true;
+                        result += weekDayTime - weekDayNumber - 1;
+                    }
                 }
             }
-            
+
             return result;
+        }
+
+        public int ClassWindowsAndFrontWindowsPenalty()
+        {
+            int classWindwos = 0;
+            int classFrontWindows = 0;
+
+            foreach (var @class in _classes)
+            {
+                var timetableHashSet = @class.GetTimetableHashSet();
+                var weekDayNumberIndex = 0;
+                var weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                var foundCount = 0;
+                var windowsCount = 0;
+                var windowsSinceLast = 0;
+
+                foreach (var weekDayTime in _weekDayTimes)
+                {
+                    if ((weekDayTime - weekDayNumber) > 100)
+                    {
+                        weekDayNumber = _weekDayNumbers[weekDayNumberIndex++];
+                        classWindwos += windowsCount - windowsSinceLast;
+                        foundCount = 0;
+                        windowsCount = 0;
+                        windowsSinceLast = 0;
+                    }
+
+                    if (timetableHashSet.Contains(weekDayTime))
+                    {
+                        foundCount++;
+                        if (foundCount == 1)
+                        {
+                            classFrontWindows += weekDayTime - weekDayNumber - 1;
+                        }
+
+                        windowsSinceLast = 0;
+                    }
+
+                    if (foundCount > 0 && !timetableHashSet.Contains(weekDayTime))
+                    {
+                        windowsCount++;
+                        windowsSinceLast++;
+                    }
+                }
+                classWindwos += windowsCount - windowsSinceLast;
+            }
+
+            return classWindwos * _classWindowPenalty + classFrontWindows * _classFrontWindowPenalty;
         }
 
         private void CheckTimetableSet()

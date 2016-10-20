@@ -13,9 +13,25 @@ namespace TimetableSolver.Models
 
             foreach (var teachingGroup in TeachingGroups)
             {
-                result.AddRange(teachingGroup.Timetable);
+                foreach (var dayTime in teachingGroup.Timetable)
+                {
+                    result.Add(dayTime);
+                }
             }
 
+            return result;
+        }
+
+        public HashSet<int> GetTimetableHashSet()
+        {
+            var result = new HashSet<int>();
+            foreach (var teachingGroup in TeachingGroups)
+            {
+                foreach (var dayTime in teachingGroup.Timetable)
+                {
+                    result.Add(dayTime);
+                }
+            }
             return result;
         }
 

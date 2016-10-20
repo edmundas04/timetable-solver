@@ -18,6 +18,19 @@ namespace TimetableSolver.Models
             return result;
         }
 
+        public HashSet<int> GetTimetableHashSet()
+        {
+            var result = new HashSet<int>();
+            foreach (var teachingGroup in TeachingGroups)
+            {
+                foreach (var dayTime in teachingGroup.Timetable)
+                {
+                    result.Add(dayTime);
+                }
+            }
+            return result;
+        }
+
         public Class Copy(List<TeachingGroup> teachingGroups)
         {
             return new Class

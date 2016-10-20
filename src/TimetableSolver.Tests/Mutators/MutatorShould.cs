@@ -10,7 +10,7 @@ using TimetableSolver.Mutators.Mutations;
 namespace TimetableSolver.Tests.Mutators
 {
     [TestClass]
-    public class SimpleMutatorShould
+    public class MutatorShould
     {
         private Timetable _timetable;
         private IMutation _mutation;

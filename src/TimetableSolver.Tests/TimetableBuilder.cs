@@ -37,8 +37,9 @@ namespace TimetableSolver.Tests
             return this;
         }
 
-        public TimetableBuilder AddTeachingGroup(int idTeachingGroup, short lessonsPerWeek, List<int> timetable)
+        public TimetableBuilder AddTeachingGroup(int idTeachingGroup, short lessonsPerWeek, List<int> timetable = null)
         {
+            timetable = timetable ?? new List<int>();
             var timetableElements = timetable.Select(s => new TimetableElement { LessonNumber = s % 10, DayOfWeek = TimetableHelper.GetDayOfWeek((short) (s / 100)) }).ToList();
             _teachingGroups.Add(new Models.Contracts.TeachingGroup { Id = idTeachingGroup, LessonsPerWeek = lessonsPerWeek, Timetable = timetableElements });
             return this;
@@ -131,6 +132,41 @@ namespace TimetableSolver.Tests
                 .AddAvailableWeekDay(DayOfWeek.Wednesday, 5);
 
             return builder.Build();
+        }
+
+        public static Timetable GetRandomTimetable(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, int lessonsPerDay, Random random = null)
+        {
+            random = random ?? new Random();
+            var availableWeekDays = new List<AvailableWeekDay>
+            {
+                new AvailableWeekDay
+                {
+                    DayOfWeek = DayOfWeek.Monday,
+                    NumberOfLessons = (short)lessonsPerDay
+                },
+                new AvailableWeekDay
+                {
+                    DayOfWeek = DayOfWeek.Tuesday,
+                    NumberOfLessons = (short)lessonsPerDay
+                },
+                new AvailableWeekDay
+                {
+                    DayOfWeek = DayOfWeek.Wednesday,
+                    NumberOfLessons = (short)lessonsPerDay
+                },
+                new AvailableWeekDay
+                {
+                    DayOfWeek = DayOfWeek.Thursday,
+                    NumberOfLessons = (short)lessonsPerDay
+                },
+                new AvailableWeekDay
+                {
+                    DayOfWeek = DayOfWeek.Friday,
+                    NumberOfLessons = (short)lessonsPerDay
+                }
+            };
+            var timetableInfoGenrator = new TimetableByClassGenerator(classCount, lessonsPerWeekForClass, lessonsPerWeekForTeacher, availableWeekDays, random);
+            return timetableInfoGenrator.Generate();
         }
     }
 }

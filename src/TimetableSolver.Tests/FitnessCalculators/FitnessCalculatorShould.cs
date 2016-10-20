@@ -6,7 +6,7 @@ using TimetableSolver.Models;
 namespace TimetableSolver.Tests.FitnessCalculators
 {
     [TestClass]
-    public class SimpleFitnessCalculatorShould
+    public class FitnessCalculatorShould
     {
         private Timetable _timetable;
 
@@ -54,6 +54,14 @@ namespace TimetableSolver.Tests.FitnessCalculators
             var fintnessCalcaulator = new FitnessCalculator(0, 0, 0, 0, 1);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness().Should().Be(9);
+        }
+
+        [TestMethod]
+        public void CalculateClassWindowsAndFrontWindows()
+        {
+            var fintnessCalcaulator = new FitnessCalculator(0, 0, 0, 1, 1);
+            fintnessCalcaulator.SetTimetable(_timetable);
+            fintnessCalcaulator.GetFitness().Should().Be(19);
         }
     }
 }

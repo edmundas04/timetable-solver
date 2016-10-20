@@ -64,10 +64,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="FitnessCalculators\SimpleFitnessCalculatorShould.cs" />
-    <Compile Include="Mutators\SimpleMutatorShould.cs" />
+    <Compile Include="FitnessCalculators\FitnessCalculatorShould.cs" />
+    <Compile Include="Mutators\MutatorShould.cs" />
+    <Compile Include="NewFitnessCalculator.cs" />
+    <Compile Include="Performance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimetableBuilder.cs" />
+    <Compile Include="TimetableByClassGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TimetableSolver\TimetableSolver.csproj">

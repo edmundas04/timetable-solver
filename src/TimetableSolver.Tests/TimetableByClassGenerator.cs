@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TimetableSolver.Samples.Models;
+using TimetableSolver.Models;
+using TimetableSolver.Models.Contracts;
 
-namespace TimetableSolver.Samples.TimetableInfoGenerators
+namespace TimetableSolver.Tests
 {
-    public class TimetableInfoByClassGenerator
+    public class TimetableByClassGenerator
     {
         private int _classCount;
         private int _lessonsPerWeekForClass;
         private int _lessonsPerWeekForTeacher;
-        private List<AvailableWeekDayInfo> _availableWeekDays;
+        private List<AvailableWeekDay> _availableWeekDays;
         private Random _random;
         private Dictionary<int, int> _teachersPool;
         private HashSet<string> _classAssignedTeachers;
@@ -18,7 +19,7 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
         private int _idTeacherStartIndex;
         private int _idTeachingGroupIndex;
 
-        public TimetableInfoByClassGenerator(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, List<AvailableWeekDayInfo> availableWeekDays, Random random = null)
+        public TimetableByClassGenerator(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, List<AvailableWeekDay> availableWeekDays, Random random = null)
         {
             _classCount = classCount;
             _lessonsPerWeekForClass = lessonsPerWeekForClass;
@@ -37,16 +38,16 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
             _idTeachingGroupIndex = 30000;
         }
 
-        public TimetableInfo Generate()
+        public Timetable Generate()
         {
-            var builder = new TimetableInfoBuilder();
+            var builder = new TimetableBuilder();
             var classes = CreateClasses(builder);
 
             foreach (var idClass in classes)
             {
                 var assignedLessons = 0;
 
-                while(assignedLessons != _lessonsPerWeekForClass)
+                while (assignedLessons != _lessonsPerWeekForClass)
                 {
                     var idTeacher = GetTeacher(builder, idClass);
                     _classAssignedTeachers.Add(idClass.ToString() + idTeacher.ToString());
@@ -60,7 +61,7 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
 
             foreach (var availableWeekDay in _availableWeekDays)
             {
-                builder.AddAvailableWeekDay(availableWeekDay.DayOfWeek, (short) availableWeekDay.NumberOfLessons);
+                builder.AddAvailableWeekDay(availableWeekDay.DayOfWeek, (short)availableWeekDay.NumberOfLessons);
             }
 
             Reset();
@@ -68,14 +69,14 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
             return builder.Build();
         }
 
-        private KeyValuePair<int, int> GetTeacingGroup(TimetableInfoBuilder builder, int lessonsToDistributeForClass, int lessonsToDistributeForTeacher)
+        private KeyValuePair<int, int> GetTeacingGroup(TimetableBuilder builder, int lessonsToDistributeForClass, int lessonsToDistributeForTeacher)
         {
             var minLessonsToDistribute = Enumerable.Min(new List<int> { lessonsToDistributeForClass, lessonsToDistributeForTeacher, 4 });
 
             var lessonsPerWeek = _random.Next(1, minLessonsToDistribute + 1);
             var idTeachingGroup = _idTeachingGroupIndex;
-            
-            builder.AddTeachingGroup(idTeachingGroup, lessonsPerWeek, GetTeachingGroupName(idTeachingGroup), GetLetter());
+
+            builder.AddTeachingGroup(idTeachingGroup, (short) lessonsPerWeek);
             _idTeachingGroupIndex++;
             return new KeyValuePair<int, int>(idTeachingGroup, lessonsPerWeek);
         }
@@ -87,7 +88,7 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
             return let.ToString();
         }
 
-        private int GetTeacher(TimetableInfoBuilder builder, int idClass)
+        private int GetTeacher(TimetableBuilder builder, int idClass)
         {
             var teachers = _teachersPool.Where(x => x.Value != _lessonsPerWeekForTeacher && !_classAssignedTeachers.Contains(idClass.ToString() + x.Key.ToString())).ToList();
 
@@ -99,7 +100,7 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
             {
                 var idTeacher = _idTeacherStartIndex;
                 _teachersPool.Add(idTeacher, 0);
-                builder.AddTeacher(idTeacher, GetTeacherName(idTeacher), "");
+                builder.AddTeacher(idTeacher);
                 _idTeacherStartIndex++;
                 return idTeacher;
             }
@@ -113,14 +114,14 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
         private string GetTeacherName(int idTeacher)
         {
             return "Teacher" + ((idTeacher + 1) % 1000);
-        } 
+        }
 
         private string GetClassName(int idClass)
         {
             return "Class" + ((idClass + 1) % 1000);
         }
 
-        private List<int> CreateClasses(TimetableInfoBuilder builder)
+        private List<int> CreateClasses(TimetableBuilder builder)
         {
             var result = new List<int>();
 
@@ -128,7 +129,7 @@ namespace TimetableSolver.Samples.TimetableInfoGenerators
             {
                 var idClass = _idClassStartIndex;
                 result.Add(idClass);
-                builder.AddClass(idClass, GetClassName(idClass));
+                builder.AddClass(idClass);
                 _idClassStartIndex++;
             }
 
