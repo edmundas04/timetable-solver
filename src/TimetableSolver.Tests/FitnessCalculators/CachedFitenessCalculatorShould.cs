@@ -24,7 +24,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateTeacherCollisions()
         {
-            var fintnessCalcaulator = new CachedFitenessCalculator(1, 0, 0, 0, 0);
+            var fintnessCalcaulator = new CachedFitnessCalculator(1, 0, 0, 0, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness(new List<int>()).Should().Be(11);
         }
@@ -32,7 +32,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateTeacherWindows()
         {
-            var fintnessCalcaulator = new CachedFitenessCalculator(0, 1, 0, 0, 0);
+            var fintnessCalcaulator = new CachedFitnessCalculator(0, 1, 0, 0, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness(new List<int>()).Should().Be(8);
         }
@@ -40,7 +40,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassCollisions()
         {
-            var fintnessCalcaulator = new CachedFitenessCalculator(0, 0, 1, 0, 0);
+            var fintnessCalcaulator = new CachedFitnessCalculator(0, 0, 1, 0, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness(new List<int>()).Should().Be(9);
         }
@@ -48,7 +48,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassWindows()
         {
-            var fintnessCalcaulator = new CachedFitenessCalculator(0, 0, 0, 1, 0);
+            var fintnessCalcaulator = new CachedFitnessCalculator(0, 0, 0, 1, 0);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness(new List<int>()).Should().Be(10);
         }
@@ -56,7 +56,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassFrontWindows()
         {
-            var fintnessCalcaulator = new CachedFitenessCalculator(0, 0, 0, 0, 1);
+            var fintnessCalcaulator = new CachedFitnessCalculator(0, 0, 0, 0, 1);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness(new List<int>()).Should().Be(9);
         }
@@ -64,7 +64,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
         [TestMethod]
         public void CalculateClassWindowsAndFrontWindows()
         {
-            var fintnessCalcaulator = new CachedFitenessCalculator(0, 0, 0, 1, 1);
+            var fintnessCalcaulator = new CachedFitnessCalculator(0, 0, 0, 1, 1);
             fintnessCalcaulator.SetTimetable(_timetable);
             fintnessCalcaulator.GetFitness(new List<int>()).Should().Be(19);
         }
@@ -78,7 +78,7 @@ namespace TimetableSolver.Tests.FitnessCalculators
             randomizer.Randomize(timetable);
 
             var simpleFitnessCalculator = new FitnessCalculator(14, 16, 21, 20, 13);
-            var cachedFitenesCalculator = new CachedFitenessCalculator(14, 16, 21, 20, 13);
+            var cachedFitenesCalculator = new CachedFitnessCalculator(14, 16, 21, 20, 13);
             var mutator = new Mutator(new List<IMutation> { new Mutation() }, random);
             simpleFitnessCalculator.SetTimetable(timetable);
             cachedFitenesCalculator.SetTimetable(timetable);

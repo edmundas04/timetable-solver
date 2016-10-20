@@ -6,26 +6,19 @@ namespace TimetableSolver.Mutators.Mutations
 {
     public class Mutation: IMutation
     {
-        private Random _random;
-
-        public Mutation(): this(new Random()) { }
-
-        public Mutation(Random random)
+        public List<MutationHistory> Mutate(Timetable timetable, Random random = null)
         {
-            _random = random;
-        }
+            random = random ?? new Random();
 
-        public List<MutationHistory> Mutate(Timetable timetable)
-        {
             var result = new List<MutationHistory>();
             var changeHistoryElement = new MutationHistory();
-            var teachingGroupIndex = _random.Next(0, timetable.TeachingGroups.Count);
+            var teachingGroupIndex = random.Next(0, timetable.TeachingGroups.Count);
             var teachingGroup = timetable.TeachingGroups[teachingGroupIndex];
-            var timetableElementIndex = _random.Next(0, teachingGroup.Timetable.Count);
+            var timetableElementIndex = random.Next(0, teachingGroup.Timetable.Count);
             var timetableElement = teachingGroup.Timetable[timetableElementIndex];
-            var weekDayIndex = _random.Next(0, timetable.AvailableWeekDays.Count);
+            var weekDayIndex = random.Next(0, timetable.AvailableWeekDays.Count);
             var weekDay = timetable.AvailableWeekDays[weekDayIndex].Key;
-            var newTimetableElement = weekDay * 100 + _random.Next(1, timetable.AvailableWeekDays[weekDayIndex].Value + 1);
+            var newTimetableElement = weekDay * 100 + random.Next(1, timetable.AvailableWeekDays[weekDayIndex].Value + 1);
             teachingGroup.ChangeDayTime(timetableElement, newTimetableElement);
             changeHistoryElement.IdTeachingGroup = teachingGroup.Id;
             changeHistoryElement.OldValue = timetableElement;

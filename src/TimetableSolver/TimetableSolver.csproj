@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FitnessCalculators\CachedFitenessCalculator.cs" />
+    <Compile Include="FitnessCalculators\CachedFitnessCalculator.cs" />
     <Compile Include="Randomizers\IRandomizer.cs" />
     <Compile Include="Randomizers\Randomizer.cs" />
     <Compile Include="Solvers\ISolver.cs" />

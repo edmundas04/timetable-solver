@@ -5,7 +5,7 @@ using TimetableSolver.Models;
 
 namespace TimetableSolver.FitnessCalculators
 {
-    public class CachedFitenessCalculator : IFitnessCalculator
+    public class CachedFitnessCalculator : IFitnessCalculator
     {
         private int _teacherCollisionPenalty;
         private int _teacherWindowPenalty;
@@ -32,7 +32,7 @@ namespace TimetableSolver.FitnessCalculators
         private int _lastFitness;
         private int? _newFitness;
 
-        public CachedFitenessCalculator(int teacherCollisionPenalty,
+        public CachedFitnessCalculator(int teacherCollisionPenalty,
             int teacherWindowPenalty, int classCollisionPenalty, int classWindowPenalty,
             int classFrontWindowPenalty)
         {

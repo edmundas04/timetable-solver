@@ -21,8 +21,8 @@ namespace TimetableSolver.Samples
             var index = 0;
 
             //The information for timetable is retrieved. It could be database or some other source
-            var timetableInfo = TimetableInfoBuilder.GetTimetableInfo();
-            //var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(50, 24, 20);
+            //var timetableInfo = TimetableInfoBuilder.GetTimetableInfo();
+            var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(120, 24, 20);
             var solver = BuildSimpleSolver(timetableInfo);
 
             var environmentName = HtmlExportHelper.PrepareEnvironment();
@@ -71,7 +71,8 @@ namespace TimetableSolver.Samples
             var penalties = Penalties.DefaultPenalties();
 
             //Created object responsible for calculating quality of timetable during optimization
-            var fitnessCalculator = new FitnessCalculator(penalties.TeacherCollisionPenalty, penalties.TeacherWindowPenalty, penalties.ClassCollisionPenalty, penalties.ClassWindowPenalty, penalties.ClassFrontWindowPenalty);
+
+            var fitnessCalculator = new CachedFitnessCalculator(penalties.TeacherCollisionPenalty, penalties.TeacherWindowPenalty, penalties.ClassCollisionPenalty, penalties.ClassWindowPenalty, penalties.ClassFrontWindowPenalty);
 
             //Created object responsible for making random changes for timetable during optimization
             var mutator = new Mutator(new List<IMutation> { new Mutation() });
