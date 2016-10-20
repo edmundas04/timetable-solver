@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace TimetableSolver.Models
@@ -18,6 +19,17 @@ namespace TimetableSolver.Models
         public void AddDayTime(int dayTime)
         {
             Timetable.Add(dayTime);
+        }
+
+        public void ChangeTimetable(List<int> newTimetable)
+        {
+            if(newTimetable.Count != LessonsPerWeek)
+            {
+                throw new ArgumentException("newTimetable has incorrect number of elements");
+            }
+
+            Timetable.Clear();
+            Timetable.AddRange(newTimetable);
         }
 
         public TeachingGroup Copy()

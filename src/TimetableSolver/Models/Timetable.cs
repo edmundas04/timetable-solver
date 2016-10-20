@@ -149,6 +149,26 @@ namespace TimetableSolver.Models
             };
         }
 
+        public List<KeyValuePair<int, List<int>>> CopyGenes()
+        {
+            return TeachingGroups.Select(s => new KeyValuePair<int, List<int>>(s.Id, s.Timetable.Select(x => x).ToList())).ToList();
+        }
+
+        public void ChangeGenes(List<KeyValuePair<int, List<int>>> genes)
+        {
+            if(!genes.All(x => TeachingGroups.Any(a => a.Id == x.Key)))
+            {
+                throw new ArgumentException("Some genes does not have teaching group");
+            }
+
+            foreach (var gene in genes)
+            {
+                var teachingGroup = TeachingGroups.Single(s => s.Id == gene.Key);
+                teachingGroup.ChangeTimetable(gene.Value);
+            }
+        }
+
+
         private List<TeachingGroup> GetClassTeachingGroups(List<TeachingGroup> teachingGroups, Class @class)
         {
             var teachingGroupIds = @class.TeachingGroups.Select(s => s.Id);

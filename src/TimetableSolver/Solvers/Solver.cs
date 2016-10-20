@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TimetableSolver.FitnessCalculators;
@@ -13,8 +14,17 @@ namespace TimetableSolver.Solvers
         private IFitnessCalculator _fitnessCalculator;
         private Timetable _currentTimetable;
         private bool _end;
+        private List<KeyValuePair<int, List<int>>> _bestGenes;
 
-        public Timetable BestTimetable { get; private set; }
+        public Timetable BestTimetable
+        {
+            get
+            {
+                var result = _currentTimetable.Copy();
+                result.ChangeGenes(_bestGenes);
+                return result;
+            }
+        }
         public int BestFitness { get; private set; }
         public int Iterations { get; private set; }
 
@@ -31,7 +41,7 @@ namespace TimetableSolver.Solvers
             _mutator.SetTimetable(_currentTimetable);
             _fitnessCalculator.SetTimetable(_currentTimetable);
 
-            BestTimetable = _currentTimetable.Copy();
+            _bestGenes = _currentTimetable.CopyGenes();
             BestFitness = fitnessCalculator.GetFitness(null);
             Iterations = 0;
         }
@@ -78,7 +88,7 @@ namespace TimetableSolver.Solvers
                 {
                     _mutator.Commit();
                     _fitnessCalculator.Commit();
-                    BestTimetable = _currentTimetable.Copy();
+                    _bestGenes = _currentTimetable.CopyGenes();
                     BestFitness = newFitness;
                 }
                 else
@@ -86,7 +96,6 @@ namespace TimetableSolver.Solvers
                     _mutator.Rollback();
                     _fitnessCalculator.Rollback();
                 }
-
             }
 
             return BestTimetable;
