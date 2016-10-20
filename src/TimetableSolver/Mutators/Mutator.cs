@@ -45,7 +45,7 @@ namespace TimetableSolver.Mutators
             var result = new List<int>();
             var randomMutationIndex = _random.Next(0, _mutations.Count);
             var randomMutation = _mutations[randomMutationIndex];
-            _pendingChanges.AddRange(randomMutation.Mutate(_timetable, _random));
+            _pendingChanges.AddRange(randomMutation.Mutate(_timetable.TeachingGroups, _timetable.AvailableWeekDays, _random));
             return _pendingChanges.Select(s => s.IdTeachingGroup).ToList();
         }
 

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TimetableSolver.Models;
@@ -24,7 +25,7 @@ namespace TimetableSolver.Tests.Mutators
             _timetable = TimetableBuilder.GetTimetable();
             _mutation = Substitute.For<IMutation>();
             FillChangeHistoryElements();
-            _mutation.Mutate(Arg.Any<Timetable>()).Returns(_changeHistoryElements);
+            _mutation.Mutate(Arg.Any<List<TeachingGroup>>(), Arg.Any<List<KeyValuePair<short, short>>>(), Arg.Any<Random>()).Returns(_changeHistoryElements);
             _simpleMutator = new Mutator(new List<IMutation> { _mutation });
             _simpleMutator.SetTimetable(_timetable);
         }

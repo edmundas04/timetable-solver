@@ -6,6 +6,6 @@ namespace TimetableSolver.Mutators.Mutations
 {
     public interface IMutation
     {
-        List<MutationHistory> Mutate(Timetable timetable, Random random = null);
+        List<MutationHistory> Mutate(List<TeachingGroup> teachingGroups, List<KeyValuePair<short, short>> availableWeekDays, Random random = null);
     }
 }
