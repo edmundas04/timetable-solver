@@ -113,8 +113,6 @@ namespace TimetableSolver.Tests.FitnessCalculators
                     cachedFitenesCalculator.Rollback();
                 }
             }
-
-
         }
     }
 }

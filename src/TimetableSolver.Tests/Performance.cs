@@ -30,7 +30,7 @@ namespace TimetableSolver.Tests
             var random2 = new Random(1991);
             var timetable2 = TimetableBuilder.GetRandomTimetable(200, 22, 22, 7, random2);
             var randomizer2 = new Randomizer();
-            randomizer1.Randomize(timetable2, random2);
+            randomizer2.Randomize(timetable2, random2);
             var mutator2 = new Mutator(new List<IMutation> { new Mutation() }, random2);
             var solver2 = new Solver(mutator2, cachedFitenessCalculator, timetable2);
 

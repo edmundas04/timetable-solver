@@ -99,7 +99,7 @@ namespace TimetableSolver.Models
             foreach (var @class in classes)
             {
                 var timetableClass = new Class { Id = @class.Id };
-                var teacherTeachingGroupIds = classAssignedTeachingGroups.Where(x => x.IdClass == timetableClass.Id).Select(s => s.IdTeachingGroup);
+                var teacherTeachingGroupIds = classAssignedTeachingGroups.Where(x => x.IdClass == timetableClass.Id).Select(s => s.IdTeachingGroup).ToList();
                 timetableClass.TeachingGroups = TeachingGroups.Where(x => teacherTeachingGroupIds.Contains(x.Id)).ToList();
                 result.Add(timetableClass);
             }
@@ -113,7 +113,7 @@ namespace TimetableSolver.Models
             foreach (var teacher in teachers)
             {
                 var timetableTeacher = new Teacher { Id = teacher.Id };
-                var teacherTeachingGroupIds = teacherAssignedTeachingGroups.Where(x => x.IdTeacher == timetableTeacher.Id).Select(s => s.IdTeachingGroup);
+                var teacherTeachingGroupIds = teacherAssignedTeachingGroups.Where(x => x.IdTeacher == timetableTeacher.Id).Select(s => s.IdTeachingGroup).ToList();
                 timetableTeacher.TeachingGroups = TeachingGroups.Where(x => teacherTeachingGroupIds.Contains(x.Id)).ToList();
                 result.Add(timetableTeacher);
             }
@@ -151,7 +151,14 @@ namespace TimetableSolver.Models
 
         public List<KeyValuePair<int, List<int>>> CopyGenes()
         {
-            return TeachingGroups.Select(s => new KeyValuePair<int, List<int>>(s.Id, s.Timetable.Select(x => x).ToList())).ToList();
+            var result = new List<KeyValuePair<int, List<int>>>();
+
+            foreach (var teachingGroup in TeachingGroups)
+            {
+                result.Add(new KeyValuePair<int, List<int>>(teachingGroup.Id, teachingGroup.Timetable.ToList()));
+            }
+
+            return result;
         }
 
         public void ChangeGenes(List<KeyValuePair<int, List<int>>> genes)

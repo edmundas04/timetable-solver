@@ -119,13 +119,15 @@ namespace TimetableSolver.FitnessCalculators
                         windowsSinceLast = 0;
                     }
 
-                    if (timetableHashSet.Contains(weekDayTime))
+                    var contains = timetableHashSet.Contains(weekDayTime);
+
+                    if (contains)
                     {
                         foundCount++;
                         windowsSinceLast = 0;
                     }
 
-                    if (foundCount > 0 && !timetableHashSet.Contains(weekDayTime))
+                    if (foundCount > 0 && !contains)
                     {
                         windowsCount++;
                         windowsSinceLast++;
@@ -174,13 +176,15 @@ namespace TimetableSolver.FitnessCalculators
                         windowsSinceLast = 0;
                     }
 
-                    if (timetableHashSet.Contains(weekDayTime))
+                    var contains = timetableHashSet.Contains(weekDayTime);
+
+                    if (contains)
                     {
                         foundCount++;
                         windowsSinceLast = 0;
                     }
 
-                    if (foundCount > 0 && !timetableHashSet.Contains(weekDayTime))
+                    if (foundCount > 0 && !contains)
                     {
                         windowsCount++;
                         windowsSinceLast++;
@@ -252,7 +256,9 @@ namespace TimetableSolver.FitnessCalculators
                         windowsSinceLast = 0;
                     }
 
-                    if (timetableHashSet.Contains(weekDayTime))
+                    var contains = timetableHashSet.Contains(weekDayTime);
+
+                    if (contains)
                     {
                         foundCount++;
                         if (foundCount == 1)
@@ -263,7 +269,7 @@ namespace TimetableSolver.FitnessCalculators
                         windowsSinceLast = 0;
                     }
 
-                    if (foundCount > 0 && !timetableHashSet.Contains(weekDayTime))
+                    if (foundCount > 0 && !contains)
                     {
                         windowsCount++;
                         windowsSinceLast++;

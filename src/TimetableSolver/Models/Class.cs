@@ -12,7 +12,10 @@ namespace TimetableSolver.Models
 
             foreach (var teachingGroup in TeachingGroups)
             {
-                result.AddRange(teachingGroup.Timetable);
+                foreach (var dayTime in teachingGroup.Timetable)
+                {
+                    result.Add(dayTime);
+                }
             }
 
             return result;
