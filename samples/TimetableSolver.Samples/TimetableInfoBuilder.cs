@@ -155,37 +155,37 @@ namespace TimetableSolver.Samples
             return builder.Build();
         }
 
-        public static TimetableInfo GetRandomTimetableInfo(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher)
+        public static TimetableInfo GetRandomTimetableInfo(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, int numberOfLessons, Random random = null)
         {
             var availableWeekDays = new List<AvailableWeekDayInfo>
             {
                 new AvailableWeekDayInfo
                 {
                     DayOfWeek = DayOfWeek.Monday,
-                    NumberOfLessons = 6
+                    NumberOfLessons = numberOfLessons
                 },
                 new AvailableWeekDayInfo
                 {
                     DayOfWeek = DayOfWeek.Tuesday,
-                    NumberOfLessons = 6
+                    NumberOfLessons = numberOfLessons
                 },
                 new AvailableWeekDayInfo
                 {
                     DayOfWeek = DayOfWeek.Wednesday,
-                    NumberOfLessons = 6
+                    NumberOfLessons = numberOfLessons
                 },
                 new AvailableWeekDayInfo
                 {
                     DayOfWeek = DayOfWeek.Thursday,
-                    NumberOfLessons = 6
+                    NumberOfLessons = numberOfLessons
                 },
                 new AvailableWeekDayInfo
                 {
                     DayOfWeek = DayOfWeek.Friday,
-                    NumberOfLessons = 6
+                    NumberOfLessons = numberOfLessons
                 }
             };
-            var timetableInfoGenrator = new TimetableInfoByClassGenerator(classCount, lessonsPerWeekForClass, lessonsPerWeekForTeacher, availableWeekDays);
+            var timetableInfoGenrator = new TimetableInfoByClassGenerator(classCount, lessonsPerWeekForClass, lessonsPerWeekForTeacher, availableWeekDays, random ?? new Random());
             return timetableInfoGenrator.Generate();
         }
     }

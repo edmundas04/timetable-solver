@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FitnessCalculators\CachedFitnessCalculator.cs" />
+    <Compile Include="Mutators\Mutations\HalfSwapMutation.cs" />
+    <Compile Include="Mutators\Mutations\SwapMutation.cs" />
     <Compile Include="Randomizers\IRandomizer.cs" />
     <Compile Include="Randomizers\Randomizer.cs" />
     <Compile Include="Solvers\ISolver.cs" />

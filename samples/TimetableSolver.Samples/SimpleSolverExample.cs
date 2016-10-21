@@ -22,7 +22,8 @@ namespace TimetableSolver.Samples
 
             //The information for timetable is retrieved. It could be database or some other source
             //var timetableInfo = TimetableInfoBuilder.GetTimetableInfo();
-            var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(120, 24, 20);
+            var random = new Random(1991);
+            var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(120, 24, 20, 7, random);
             var solver = BuildSimpleSolver(timetableInfo);
 
             var environmentName = HtmlExportHelper.PrepareEnvironment();
@@ -40,7 +41,7 @@ namespace TimetableSolver.Samples
                 solver.Stop();
                 optimization.Wait();
                 Console.Write($"{index}. ");
-                InfoPrinter.PrintTimetableInfo(optimization.Result, Penalties.DefaultPenalties());
+                InfoPrinter.PrintTimetableInfo(optimization.Result, Penalties.DefaultPenalties(), solver.Iterations);
                 
             }
 
@@ -56,14 +57,16 @@ namespace TimetableSolver.Samples
             Console.Read();
         }
 
-        private static Solver BuildSimpleSolver(TimetableInfo timetableInfo)
+        private static Solver BuildSimpleSolver(TimetableInfo timetableInfo, Random random = null)
         {
+            random = random ?? new Random();
+
             //Timetable information is transformed to timetable object used for optimization
             var timetable = timetableInfo.ToTimetable();
 
             //If timetable is empty random timetable generated
             var randomizer = new Randomizer();
-            randomizer.Randomize(timetable);
+            randomizer.Randomize(timetable, random);
 
             //Updated timetable information object with new timtable values
             timetableInfo.UpdateTimetable(timetable);
@@ -75,11 +78,11 @@ namespace TimetableSolver.Samples
             var fitnessCalculator = new CachedFitnessCalculator(penalties.TeacherCollisionPenalty, penalties.TeacherWindowPenalty, penalties.ClassCollisionPenalty, penalties.ClassWindowPenalty, penalties.ClassFrontWindowPenalty);
 
             //Created object responsible for making random changes for timetable during optimization
-            var mutator = new Mutator(new List<IMutation> { new Mutation() });
+            var mutator = new Mutator(new List<IMutation> { new Mutation() }, random);
 
             //Solver is created
             var solver = new Solver(mutator, fitnessCalculator, timetable);
-            InfoPrinter.PrintTimetableInfo(timetable, penalties);
+            InfoPrinter.PrintTimetableInfo(timetable, penalties, solver.Iterations);
             return solver;
         }
 
