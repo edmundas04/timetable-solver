@@ -23,7 +23,7 @@ namespace TimetableSolver.Samples
             //The information for timetable is retrieved. It could be database or some other source
             //var timetableInfo = TimetableInfoBuilder.GetTimetableInfo();
             var random = new Random(1991);
-            var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(120, 24, 20, 7, random);
+            var timetableInfo = TimetableInfoBuilder.GetRandomTimetableInfo(200, 24, 20, 7, random);
             var solver = BuildSimpleSolver(timetableInfo);
 
             var environmentName = HtmlExportHelper.PrepareEnvironment();
@@ -44,16 +44,16 @@ namespace TimetableSolver.Samples
                 InfoPrinter.PrintTimetableInfo(optimization.Result, Penalties.DefaultPenalties(), solver.Iterations);
                 
             }
+            Console.WriteLine("OptimizationEnded");
 
-            if(optimization != null)
+            if (optimization != null)
             {
                 timetableInfo.UpdateTimetable(optimization.Result);
             }
 
             HtmlExportHelper.ExportHtml(timetableInfo, environmentName, "after");
 
-            Console.WriteLine("OptimizationEnded");
-            Console.WriteLine($"Iterations: {solver.Iterations}");
+            
             Console.Read();
         }
 

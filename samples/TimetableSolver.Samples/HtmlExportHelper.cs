@@ -32,6 +32,7 @@ namespace TimetableSolver.Samples
 
         public static string PrepareEnvironment()
         {
+            Console.WriteLine("Preparing export environment...");
             var folderName = DateTime.Now.ToString("yyyy-MM-dd hhmmss");
             string currentPath = Directory.GetCurrentDirectory();
             var path = Path.Combine(currentPath, folderName);
@@ -92,6 +93,8 @@ namespace TimetableSolver.Samples
                 byte[] info = new UTF8Encoding(true).GetBytes(fileContent);
                 fs.Write(info, 0, info.Length);
             }
+
+            Console.WriteLine($"Timetable exported to: {path}");
         }
     }
 }
