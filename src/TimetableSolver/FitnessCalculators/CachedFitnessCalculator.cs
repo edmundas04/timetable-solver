@@ -176,6 +176,87 @@ namespace TimetableSolver.FitnessCalculators
             }
 
             return _newFitness.Value;
+        }        
+
+        public void Commit()
+        {
+            if (!_newFitness.HasValue)
+            {
+                throw new Exception("No pending changes exists");
+            }
+
+            foreach (var teacher in _teachersToProcess)
+            {
+                _teacherFitnessMap[teacher.Id] = _newTeacherFitnessMap[teacher.Id];
+            }
+
+            foreach (var @class in _classesToProcess)
+            {
+                _classFitnessMap[@class.Id] = _newClassFitnessMap[@class.Id];
+            }
+
+            _lastFitness = _newFitness.Value;
+            _newFitness = null;
+            _teachersToProcess.Clear();
+            _classesToProcess.Clear();
+            _newTeacherFitnessMap.Clear();
+            _newClassFitnessMap.Clear();
+        }        
+
+        public void Rollback()
+        {
+            if (!_newFitness.HasValue)
+            {
+                throw new Exception("No pending changes exists");
+            }
+
+            _newFitness = null;
+            _teachersToProcess.Clear();
+            _classesToProcess.Clear();
+            _newTeacherFitnessMap.Clear();
+            _newClassFitnessMap.Clear();
+        }
+
+        public List<TeachingGroup> GetTeachingGroupCausingPenalties()
+        {
+            var result = new List<TeachingGroup>();
+            var selectedTeachingGroups = new HashSet<int>();
+
+            foreach (var teacher in _teachers)
+            {
+                if(_teacherFitnessMap[teacher.Id] == 0)
+                {
+                    continue;
+                }
+
+                foreach (var teachingGroup in teacher.TeachingGroups)
+                {
+                    if (!selectedTeachingGroups.Contains(teachingGroup.Id))
+                    {
+                        selectedTeachingGroups.Add(teachingGroup.Id);
+                        result.Add(teachingGroup);
+                    }
+                }
+            }
+
+            foreach (var @class in _classes)
+            {
+                if (_classFitnessMap[@class.Id] == 0)
+                {
+                    continue;
+                }
+
+                foreach (var teachingGroup in @class.TeachingGroups)
+                {
+                    if (!selectedTeachingGroups.Contains(teachingGroup.Id))
+                    {
+                        selectedTeachingGroups.Add(teachingGroup.Id);
+                        result.Add(teachingGroup);
+                    }
+                }
+            }
+
+            return result;
         }
 
         private void CalculateTeacherCollisionFitness()
@@ -187,7 +268,7 @@ namespace TimetableSolver.FitnessCalculators
             }
         }
 
-        public void CalculateTeacherWindowsFitness()
+        private void CalculateTeacherWindowsFitness()
         {
             foreach (var teacher in _teachersToProcess)
             {
@@ -230,7 +311,7 @@ namespace TimetableSolver.FitnessCalculators
             }
         }
 
-        public void CalculateClassCollisionsFitness()
+        private void CalculateClassCollisionsFitness()
         {
             foreach (var @class in _classesToProcess)
             {
@@ -239,7 +320,7 @@ namespace TimetableSolver.FitnessCalculators
             }
         }
 
-        public void CalculateClassWindowsFitness()
+        private void CalculateClassWindowsFitness()
         {
             foreach (var @class in _classesToProcess)
             {
@@ -281,7 +362,7 @@ namespace TimetableSolver.FitnessCalculators
             }
         }
 
-        public void CalculateClassFrontWindowsFitness()
+        private void CalculateClassFrontWindowsFitness()
         {
             foreach (var @class in _classesToProcess)
             {
@@ -315,7 +396,7 @@ namespace TimetableSolver.FitnessCalculators
             }
         }
 
-        public void CalculateClassWindowsAndFrontWindowsFitness()
+        private void CalculateClassWindowsAndFrontWindowsFitness()
         {
             foreach (var @class in _classesToProcess)
             {
@@ -364,43 +445,5 @@ namespace TimetableSolver.FitnessCalculators
             }
         }
 
-        public void Commit()
-        {
-            if (!_newFitness.HasValue)
-            {
-                throw new Exception("No pending changes exists");
-            }
-
-            foreach (var teacher in _teachersToProcess)
-            {
-                _teacherFitnessMap[teacher.Id] = _newTeacherFitnessMap[teacher.Id];
-            }
-
-            foreach (var @class in _classesToProcess)
-            {
-                _classFitnessMap[@class.Id] = _newClassFitnessMap[@class.Id];
-            }
-
-            _lastFitness = _newFitness.Value;
-            _newFitness = null;
-            _teachersToProcess.Clear();
-            _classesToProcess.Clear();
-            _newTeacherFitnessMap.Clear();
-            _newClassFitnessMap.Clear();
-        }        
-
-        public void Rollback()
-        {
-            if (!_newFitness.HasValue)
-            {
-                throw new Exception("No pending changes exists");
-            }
-
-            _newFitness = null;
-            _teachersToProcess.Clear();
-            _classesToProcess.Clear();
-            _newTeacherFitnessMap.Clear();
-            _newClassFitnessMap.Clear();
-        }
     }
 }
