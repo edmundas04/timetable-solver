@@ -34,12 +34,14 @@ namespace TimetableSolver.Models
 
         public TeachingGroup Copy()
         {
-            return new TeachingGroup
-            {
-                Id = Id,
-                LessonsPerWeek = LessonsPerWeek,
-                Timetable = Timetable.Select(s => s).ToList()
-            };
+            return new TeachingGroup(Id, LessonsPerWeek, Timetable.ToList());
+        }
+
+        public TeachingGroup(int id, int lessonsPerWeek, List<int> timetable)
+        {
+            Id = id;
+            LessonsPerWeek = lessonsPerWeek;
+            Timetable = timetable;
         }
     }
 }

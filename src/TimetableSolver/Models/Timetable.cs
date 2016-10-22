@@ -99,9 +99,8 @@ namespace TimetableSolver.Models
             var result = new List<Class>();
             foreach (var @class in classes)
             {
-                var timetableClass = new Class { Id = @class.Id };
-                var teacherTeachingGroupIds = classAssignedTeachingGroups.Where(x => x.IdClass == timetableClass.Id).Select(s => s.IdTeachingGroup).ToList();
-                timetableClass.TeachingGroups = TeachingGroups.Where(x => teacherTeachingGroupIds.Contains(x.Id)).ToList();
+                var teacherTeachingGroupIds = classAssignedTeachingGroups.Where(x => x.IdClass == @class.Id).Select(s => s.IdTeachingGroup).ToList();
+                var timetableClass = new Class(@class.Id, TeachingGroups.Where(x => teacherTeachingGroupIds.Contains(x.Id)).ToList());
                 result.Add(timetableClass);
             }
 
@@ -113,9 +112,8 @@ namespace TimetableSolver.Models
             var result = new List<Teacher>();
             foreach (var teacher in teachers)
             {
-                var timetableTeacher = new Teacher { Id = teacher.Id };
-                var teacherTeachingGroupIds = teacherAssignedTeachingGroups.Where(x => x.IdTeacher == timetableTeacher.Id).Select(s => s.IdTeachingGroup).ToList();
-                timetableTeacher.TeachingGroups = TeachingGroups.Where(x => teacherTeachingGroupIds.Contains(x.Id)).ToList();
+                var teacherTeachingGroupIds = teacherAssignedTeachingGroups.Where(x => x.IdTeacher == teacher.Id).Select(s => s.IdTeachingGroup).ToList();
+                var timetableTeacher = new Teacher(teacher.Id, TeachingGroups.Where(x => teacherTeachingGroupIds.Contains(x.Id)).ToList());
                 result.Add(timetableTeacher);
             }
 
@@ -124,7 +122,7 @@ namespace TimetableSolver.Models
 
         private List<TeachingGroup> TransformTeachingGroups(List<TeachingGroupContract> teachingGroups)
         {
-            return teachingGroups.Select(s => new TeachingGroup { Id = s.Id, LessonsPerWeek = s.LessonsPerWeek, Timetable = TransformTimetableElements(s.Timetable) }).ToList();
+            return teachingGroups.Select(s => new TeachingGroup(s.Id, s.LessonsPerWeek, TransformTimetableElements(s.Timetable))).ToList();
         }
 
         private List<int> TransformTimetableElements(List<TimetableElementContract> timetableElements)

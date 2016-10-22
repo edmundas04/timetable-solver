@@ -37,11 +37,13 @@ namespace TimetableSolver.Models
 
         public Teacher Copy(List<TeachingGroup> teachingGroups)
         {
-            return new Teacher
-            {
-                Id = Id,
-                TeachingGroups = teachingGroups
-            };
+            return new Teacher(Id, teachingGroups);
+        }
+
+        public Teacher(int id, List<TeachingGroup> teachingGroups)
+        {
+            Id = id;
+            TeachingGroups = teachingGroups;
         }
     }
 }

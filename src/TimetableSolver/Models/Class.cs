@@ -36,11 +36,13 @@ namespace TimetableSolver.Models
 
         public Class Copy(List<TeachingGroup> teachingGroups)
         {
-            return new Class
-            {
-                Id = Id,
-                TeachingGroups = teachingGroups
-            };
+            return new Class(Id, teachingGroups);
+        }
+
+        public Class(int id, List<TeachingGroup> teachingGroups)
+        {
+            Id = id;
+            TeachingGroups = teachingGroups;
         }
     }
 }
