@@ -3,8 +3,10 @@
 ##Overview
 ### What is timetable solver?
 Timetable solver is C# library for timetable optimization problem. At this point it optimizes timetable for **Teachers** and **Classes**
+### How can I run this library?
+You could use explanation in "Example" section. If you don't wont to work on example you could easily run sample project and follow instructions in console. It runs your selected optimization and exports "before" and "after" results to html in visual format.
 ## Example
-This example will help you to construct first timetable solver and start optimization. It should be implementd in repository's sample project, because the project has some predifined logic which will help you build your data source and construct timetable object used by optimization.
+This example will help you to construct first timetable solver and start optimization. It should be implementd in repository's sample project, because the project has some predifined logic which will help you build your data source and construct timetable object used by optimization. 
 ### Step 1. Constructing timetable
 Firstly, you should get your datasource. It could be taken from any database, but at this moment we will build it using ```TimetableInfoBuilder```.
 
