@@ -8,7 +8,7 @@ using TimetableSolver.Mutators;
 
 namespace TimetableSolver.Solvers
 {
-    public class Solver : ISolver
+    public class Solver : ISolverDiagnostics
     {
         private IMutator _mutator;
         private IFitnessCalculator _fitnessCalculator;

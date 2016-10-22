@@ -17,6 +17,8 @@ namespace TimetableSolver.Mutators
 
         private List<MutationHistory> _pendingChanges;
         private Dictionary<int, TeachingGroup> _teachingGroups;
+        private Dictionary<int, Teacher> _teachers;
+        private Dictionary<int, Class> _classes;
         private List<TeachingGroup> _teachingGroupsToProcess;
         private int _currentIteration;
 
@@ -37,6 +39,8 @@ namespace TimetableSolver.Mutators
         {
             _timetable = timetable;
             _teachingGroups = timetable.TeachingGroups.ToDictionary(x => x.Id);
+            _classes = timetable.Classes.ToDictionary(x => x.Id);
+            _teachers = timetable.Teachers.ToDictionary(x => x.Id);
             _teachingGroupsToProcess = timetable.TeachingGroups.ToList();
             _currentIteration = 1;
         }
@@ -55,7 +59,7 @@ namespace TimetableSolver.Mutators
 
             if(_currentIteration % _refreshRate == 0)
             {
-                _teachingGroupsToProcess = _fitnessCalculator.GetTeachingGroupCausingPenalties();
+                SetTeachingGroupToProcess();
             }
 
             _currentIteration++;
@@ -65,6 +69,51 @@ namespace TimetableSolver.Mutators
             var randomMutation = _mutations[randomMutationIndex];
             _pendingChanges.AddRange(randomMutation.Mutate(_teachingGroupsToProcess, _timetable.AvailableWeekDays, _random));
             return _pendingChanges.Select(s => s.IdTeachingGroup).ToList();
+        }
+
+        public void SetTeachingGroupToProcess()
+        {
+            var result = new List<TeachingGroup>();
+            var selectedTeachingGroups = new HashSet<int>();
+            _teachingGroupsToProcess.Clear();
+
+            foreach (var teacherFitness in _fitnessCalculator.TeacherFitnessMap)
+            {
+                if (teacherFitness.Value == 0)
+                {
+                    continue;
+                }
+
+                var teacher = _teachers[teacherFitness.Key];
+
+                foreach (var teachingGroup in teacher.TeachingGroups)
+                {
+                    if (!selectedTeachingGroups.Contains(teachingGroup.Id))
+                    {
+                        selectedTeachingGroups.Add(teachingGroup.Id);
+                        _teachingGroupsToProcess.Add(teachingGroup);
+                    }
+                }
+            }
+
+            foreach (var classFitness in _fitnessCalculator.ClassFitnessMap)
+            {
+                if (classFitness.Value == 0)
+                {
+                    continue;
+                }
+
+                var @class = _classes[classFitness.Key];
+
+                foreach (var teachingGroup in @class.TeachingGroups)
+                {
+                    if (!selectedTeachingGroups.Contains(teachingGroup.Id))
+                    {
+                        selectedTeachingGroups.Add(teachingGroup.Id);
+                        _teachingGroupsToProcess.Add(teachingGroup);
+                    }
+                }
+            }
         }
 
         public void Commit()

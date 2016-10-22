@@ -15,9 +15,9 @@ namespace TimetableSolver.FitnessCalculators
 
         private Timetable _timetable;
 
-        private List<Teacher> _teachers { get; set; }
-        private List<Class> _classes { get; set; }
-        private List<TeachingGroup> _teachingGroups { get; set; }
+        private List<Teacher> _teachers;
+        private List<Class> _classes;
+        private List<TeachingGroup> _teachingGroups;
         private List<int> _weekDayTimes;
         private List<int> _weekDayNumbers;
 
@@ -31,6 +31,22 @@ namespace TimetableSolver.FitnessCalculators
         private List<Class> _classesToProcess;
         private int _lastFitness;
         private int? _newFitness;
+
+        public Dictionary<int, int> TeacherFitnessMap
+        {
+            get
+            {
+                return _teacherFitnessMap.ToDictionary(x => x.Key, x => x.Value);
+            }
+        }
+
+        public Dictionary<int, int> ClassFitnessMap
+        {
+            get
+            {
+                return _classFitnessMap.ToDictionary(x => x.Key, x => x.Value);
+            }
+        }
 
         public CachedFitnessCalculator(int teacherCollisionPenalty,
             int teacherWindowPenalty, int classCollisionPenalty, int classWindowPenalty,
@@ -215,48 +231,6 @@ namespace TimetableSolver.FitnessCalculators
             _classesToProcess.Clear();
             _newTeacherFitnessMap.Clear();
             _newClassFitnessMap.Clear();
-        }
-
-        public List<TeachingGroup> GetTeachingGroupCausingPenalties()
-        {
-            var result = new List<TeachingGroup>();
-            var selectedTeachingGroups = new HashSet<int>();
-
-            foreach (var teacher in _teachers)
-            {
-                if(_teacherFitnessMap[teacher.Id] == 0)
-                {
-                    continue;
-                }
-
-                foreach (var teachingGroup in teacher.TeachingGroups)
-                {
-                    if (!selectedTeachingGroups.Contains(teachingGroup.Id))
-                    {
-                        selectedTeachingGroups.Add(teachingGroup.Id);
-                        result.Add(teachingGroup);
-                    }
-                }
-            }
-
-            foreach (var @class in _classes)
-            {
-                if (_classFitnessMap[@class.Id] == 0)
-                {
-                    continue;
-                }
-
-                foreach (var teachingGroup in @class.TeachingGroups)
-                {
-                    if (!selectedTeachingGroups.Contains(teachingGroup.Id))
-                    {
-                        selectedTeachingGroups.Add(teachingGroup.Id);
-                        result.Add(teachingGroup);
-                    }
-                }
-            }
-
-            return result;
         }
 
         private void CalculateTeacherCollisionFitness()

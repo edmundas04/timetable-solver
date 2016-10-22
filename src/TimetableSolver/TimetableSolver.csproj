@@ -47,6 +47,7 @@
     <Compile Include="Randomizers\IRandomizer.cs" />
     <Compile Include="Randomizers\Randomizer.cs" />
     <Compile Include="Solvers\ISolver.cs" />
+    <Compile Include="Solvers\ISolverDiagnostics.cs" />
     <Compile Include="Solvers\Solver.cs" />
     <Compile Include="FitnessCalculators\IFitnessCalculator.cs" />
     <Compile Include="FitnessCalculators\FitnessCalculator.cs" />
