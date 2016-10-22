@@ -2,9 +2,9 @@
 
 namespace TimetableSolver.Models.Contracts
 {
-    public class TimetableElement
+    public class AvailableWeekDayContract
     {
         public DayOfWeek DayOfWeek { get; set; }
-        public int LessonNumber { get; set; }
+        public short NumberOfLessons { get; set; }
     }
 }

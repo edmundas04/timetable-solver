@@ -2,10 +2,10 @@
 
 namespace TimetableSolver.Models.Contracts
 {
-    public class TeachingGroup
+    public class TeachingGroupContract
     {
         public int Id { get; set; }
         public int LessonsPerWeek { get; set; }
-        public List<TimetableElement> Timetable { get; set; }
+        public List<TimetableElementContract> Timetable { get; set; }
     }
 }

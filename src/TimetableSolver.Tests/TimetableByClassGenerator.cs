@@ -11,7 +11,7 @@ namespace TimetableSolver.Tests
         private int _classCount;
         private int _lessonsPerWeekForClass;
         private int _lessonsPerWeekForTeacher;
-        private List<AvailableWeekDay> _availableWeekDays;
+        private List<AvailableWeekDayContract> _availableWeekDays;
         private Random _random;
         private Dictionary<int, int> _teachersPool;
         private HashSet<string> _classAssignedTeachers;
@@ -19,7 +19,7 @@ namespace TimetableSolver.Tests
         private int _idTeacherStartIndex;
         private int _idTeachingGroupIndex;
 
-        public TimetableByClassGenerator(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, List<AvailableWeekDay> availableWeekDays, Random random = null)
+        public TimetableByClassGenerator(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, List<AvailableWeekDayContract> availableWeekDays, Random random = null)
         {
             _classCount = classCount;
             _lessonsPerWeekForClass = lessonsPerWeekForClass;

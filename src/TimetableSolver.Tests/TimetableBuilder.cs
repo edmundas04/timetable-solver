@@ -8,58 +8,58 @@ namespace TimetableSolver.Tests
 {
     public class TimetableBuilder
     {
-        private List<Models.Contracts.Class> _classes;
-        private List<Models.Contracts.Teacher> _teachers;
-        private List<Models.Contracts.TeachingGroup> _teachingGroups;
-        private List<ClassAssignedTeachingGroup> _classAssignedTeachingGroups;
-        private List<TeacherAssignedTeachingGroup> _teacherAssignedTeachingGroups;
-        private List<AvailableWeekDay> _availableWeekDays;
+        private List<ClassContract> _classes;
+        private List<TeacherContract> _teachers;
+        private List<TeachingGroupContract> _teachingGroups;
+        private List<ClassAssignedTeachingGroupContract> _classAssignedTeachingGroups;
+        private List<TeacherAssignedTeachingGroupContract> _teacherAssignedTeachingGroups;
+        private List<AvailableWeekDayContract> _availableWeekDays;
 
         public TimetableBuilder()
         {
-            _classes = new List<Models.Contracts.Class>();
-            _teachers = new List<Models.Contracts.Teacher>();
-            _teachingGroups = new List<Models.Contracts.TeachingGroup>();
-            _classAssignedTeachingGroups = new List<ClassAssignedTeachingGroup>();
-            _teacherAssignedTeachingGroups = new List<TeacherAssignedTeachingGroup>();
-            _availableWeekDays = new List<AvailableWeekDay>();
+            _classes = new List<ClassContract>();
+            _teachers = new List<TeacherContract>();
+            _teachingGroups = new List<TeachingGroupContract>();
+            _classAssignedTeachingGroups = new List<ClassAssignedTeachingGroupContract>();
+            _teacherAssignedTeachingGroups = new List<TeacherAssignedTeachingGroupContract>();
+            _availableWeekDays = new List<AvailableWeekDayContract>();
         }
 
         public TimetableBuilder AddClass(int idClass)
         {
-            _classes.Add(new Models.Contracts.Class { Id = idClass });
+            _classes.Add(new ClassContract { Id = idClass });
             return this;
         }
 
         public TimetableBuilder AddTeacher(int idTeacher)
         {
-            _teachers.Add(new Models.Contracts.Teacher { Id = idTeacher });
+            _teachers.Add(new TeacherContract { Id = idTeacher });
             return this;
         }
 
         public TimetableBuilder AddTeachingGroup(int idTeachingGroup, short lessonsPerWeek, List<int> timetable = null)
         {
             timetable = timetable ?? new List<int>();
-            var timetableElements = timetable.Select(s => new TimetableElement { LessonNumber = s % 10, DayOfWeek = TimetableHelper.GetDayOfWeek((short) (s / 100)) }).ToList();
-            _teachingGroups.Add(new Models.Contracts.TeachingGroup { Id = idTeachingGroup, LessonsPerWeek = lessonsPerWeek, Timetable = timetableElements });
+            var timetableElements = timetable.Select(s => new TimetableElementContract { LessonNumber = s % 10, DayOfWeek = TimetableHelper.GetDayOfWeek((short) (s / 100)) }).ToList();
+            _teachingGroups.Add(new TeachingGroupContract { Id = idTeachingGroup, LessonsPerWeek = lessonsPerWeek, Timetable = timetableElements });
             return this;
         }
 
         public TimetableBuilder AddTeacherAssignment(int idTeacher, int idTeachingGroup)
         {
-            _teacherAssignedTeachingGroups.Add(new TeacherAssignedTeachingGroup { IdTeacher = idTeacher, IdTeachingGroup = idTeachingGroup });
+            _teacherAssignedTeachingGroups.Add(new TeacherAssignedTeachingGroupContract { IdTeacher = idTeacher, IdTeachingGroup = idTeachingGroup });
             return this;
         }
 
         public TimetableBuilder AddClassAssignment(int idClass, int idTeachingGroup)
         {
-            _classAssignedTeachingGroups.Add(new ClassAssignedTeachingGroup { IdClass = idClass, IdTeachingGroup = idTeachingGroup });
+            _classAssignedTeachingGroups.Add(new ClassAssignedTeachingGroupContract { IdClass = idClass, IdTeachingGroup = idTeachingGroup });
             return this;
         }
 
         public TimetableBuilder AddAvailableWeekDay(DayOfWeek dayOfWeek, short numberOfLessons)
         {
-            _availableWeekDays.Add(new AvailableWeekDay { DayOfWeek = dayOfWeek, NumberOfLessons= numberOfLessons });
+            _availableWeekDays.Add(new AvailableWeekDayContract { DayOfWeek = dayOfWeek, NumberOfLessons= numberOfLessons });
             return this;
         }
 
@@ -137,29 +137,29 @@ namespace TimetableSolver.Tests
         public static Timetable GetRandomTimetable(int classCount, int lessonsPerWeekForClass, int lessonsPerWeekForTeacher, int lessonsPerDay, Random random = null)
         {
             random = random ?? new Random();
-            var availableWeekDays = new List<AvailableWeekDay>
+            var availableWeekDays = new List<AvailableWeekDayContract>
             {
-                new AvailableWeekDay
+                new AvailableWeekDayContract
                 {
                     DayOfWeek = DayOfWeek.Monday,
                     NumberOfLessons = (short)lessonsPerDay
                 },
-                new AvailableWeekDay
+                new AvailableWeekDayContract
                 {
                     DayOfWeek = DayOfWeek.Tuesday,
                     NumberOfLessons = (short)lessonsPerDay
                 },
-                new AvailableWeekDay
+                new AvailableWeekDayContract
                 {
                     DayOfWeek = DayOfWeek.Wednesday,
                     NumberOfLessons = (short)lessonsPerDay
                 },
-                new AvailableWeekDay
+                new AvailableWeekDayContract
                 {
                     DayOfWeek = DayOfWeek.Thursday,
                     NumberOfLessons = (short)lessonsPerDay
                 },
-                new AvailableWeekDay
+                new AvailableWeekDayContract
                 {
                     DayOfWeek = DayOfWeek.Friday,
                     NumberOfLessons = (short)lessonsPerDay

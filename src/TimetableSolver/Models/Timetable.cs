@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TimetableSolver.Models.Contracts;
 
 namespace TimetableSolver.Models
 {
@@ -13,12 +14,12 @@ namespace TimetableSolver.Models
 
         public Timetable() { }
 
-        public Timetable(List<Contracts.Class> classes, 
-            List<Contracts.Teacher> teachers, 
-            List<Contracts.TeachingGroup> teachingGroups,
-            List<Contracts.ClassAssignedTeachingGroup> classAssignedTeachingGroups, 
-            List<Contracts.TeacherAssignedTeachingGroup> teacherAssignedTeachingGroups,
-            List<Contracts.AvailableWeekDay> availableWeekDays)
+        public Timetable(List<ClassContract> classes, 
+            List<TeacherContract> teachers, 
+            List<TeachingGroupContract> teachingGroups,
+            List<ClassAssignedTeachingGroupContract> classAssignedTeachingGroups, 
+            List<TeacherAssignedTeachingGroupContract> teacherAssignedTeachingGroups,
+            List<AvailableWeekDayContract> availableWeekDays)
         {
             Check(classes, teachers, teachingGroups, classAssignedTeachingGroups, teacherAssignedTeachingGroups, availableWeekDays);
             TeachingGroups = TransformTeachingGroups(teachingGroups);
@@ -27,11 +28,11 @@ namespace TimetableSolver.Models
             AvailableWeekDays = TransformAvailableWeekDays(availableWeekDays);
         }
 
-        private void Check(List<Contracts.Class> classes,
-            List<Contracts.Teacher> teachers, List<Contracts.TeachingGroup> teachingGroups, 
-            List<Contracts.ClassAssignedTeachingGroup> classAssignedTeachingGroups,
-            List<Contracts.TeacherAssignedTeachingGroup> teacherAssignedTeachingGroups,
-            List<Contracts.AvailableWeekDay> availableWeekDays)
+        private void Check(List<ClassContract> classes,
+            List<TeacherContract> teachers, List<TeachingGroupContract> teachingGroups, 
+            List<ClassAssignedTeachingGroupContract> classAssignedTeachingGroups,
+            List<TeacherAssignedTeachingGroupContract> teacherAssignedTeachingGroups,
+            List<AvailableWeekDayContract> availableWeekDays)
         {
             if (!classAssignedTeachingGroups.All(x => classes.Any(c => c.Id == x.IdClass)))
             {
@@ -81,7 +82,7 @@ namespace TimetableSolver.Models
             }
         }
 
-        private List<KeyValuePair<short, short>> TransformAvailableWeekDays(List<Contracts.AvailableWeekDay> availableWeekDays)
+        private List<KeyValuePair<short, short>> TransformAvailableWeekDays(List<AvailableWeekDayContract> availableWeekDays)
         {
             var result = new List<KeyValuePair<short, short>>();
 
@@ -93,7 +94,7 @@ namespace TimetableSolver.Models
             return result;
         }
 
-        private List<Class> TransformClasses(List<Contracts.Class> classes, List<Contracts.ClassAssignedTeachingGroup> classAssignedTeachingGroups)
+        private List<Class> TransformClasses(List<ClassContract> classes, List<ClassAssignedTeachingGroupContract> classAssignedTeachingGroups)
         {
             var result = new List<Class>();
             foreach (var @class in classes)
@@ -107,7 +108,7 @@ namespace TimetableSolver.Models
             return result;
         }
 
-        private List<Teacher> TransformTeachers(List<Contracts.Teacher> teachers, List<Contracts.TeacherAssignedTeachingGroup> teacherAssignedTeachingGroups)
+        private List<Teacher> TransformTeachers(List<TeacherContract> teachers, List<TeacherAssignedTeachingGroupContract> teacherAssignedTeachingGroups)
         {
             var result = new List<Teacher>();
             foreach (var teacher in teachers)
@@ -121,17 +122,17 @@ namespace TimetableSolver.Models
             return result;
         }
 
-        private List<TeachingGroup> TransformTeachingGroups(List<Contracts.TeachingGroup> teachingGroups)
+        private List<TeachingGroup> TransformTeachingGroups(List<TeachingGroupContract> teachingGroups)
         {
             return teachingGroups.Select(s => new TeachingGroup { Id = s.Id, LessonsPerWeek = s.LessonsPerWeek, Timetable = TransformTimetableElements(s.Timetable) }).ToList();
         }
 
-        private List<int> TransformTimetableElements(List<Contracts.TimetableElement> timetableElements)
+        private List<int> TransformTimetableElements(List<TimetableElementContract> timetableElements)
         {
             return timetableElements.Select(s => TransformTimetableElement(s)).ToList();
         }
 
-        private int TransformTimetableElement(Contracts.TimetableElement timetableElement)
+        private int TransformTimetableElement(TimetableElementContract timetableElement)
         {
             return TimetableHelper.GetWeekNumber(timetableElement.DayOfWeek) * 100 + timetableElement.LessonNumber;
         }

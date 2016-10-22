@@ -1,8 +1,8 @@
 ﻿namespace TimetableSolver.Models.Contracts
 {
-    public class TeacherAssignedTeachingGroup
+    public class ClassAssignedTeachingGroupContract
     {
         public int IdTeachingGroup { get; set; }
-        public int IdTeacher { get; set; }
+        public int IdClass { get; set; }
     }
 }
